@@ -6,7 +6,7 @@
 #    By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/05 12:29:27 by gpouyat           #+#    #+#              #
-#    Updated: 2019/01/28 15:39:20 by gpouyat          ###   ########.fr        #
+#    Updated: 2019/01/30 18:18:03 by gpouyat          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,8 +25,10 @@ SRCS_SERVER			+= /server/main.c
 
 SRCS_CLIENT			+= /client/main.c
 
-SRCS = $(SRCS_SERVER) $(SRCS_CLIENT)
-SRC_SUBDIR = client server
+SRCS_TOOLS			+= /tools/fork.c /tools/send.c
+
+SRCS = $(SRCS_SERVER) $(SRCS_CLIENT) $(SRCS_TOOLS)
+SRC_SUBDIR = client server tools
 
 ###############################################################################
 
@@ -66,6 +68,7 @@ OBJS_DIRS = $(addprefix $(OBJS_DIR)/,$(SRC_SUBDIR))
 
 OBJS_SERVER = $(addprefix $(OBJS_DIR),$(SRCS_SERVER:.c=.o))
 OBJS_CLIENT = $(addprefix $(OBJS_DIR),$(SRCS_CLIENT:.c=.o))
+OBJS_TOOLS = $(addprefix $(OBJS_DIR),$(SRCS_TOOLS:.c=.o))
 
 
 BUILD_DIR		= $(OBJS_DIRS)
@@ -89,14 +92,14 @@ $(eval TOTAL=$(shell echo $$(printf "%s" "$(SRCS)" | wc -w)))
 all: $(NAME_SERVER) $(NAME_CLIENT)
 
 $(NAME_SERVER): $(LIB) $(OBJS)
-	$(CC) -o $(NAME_SERVER) $(CFLAGS) $(OBJS_SERVER) $(LIB)
+	$(CC) -o $(NAME_SERVER) $(CFLAGS) $(OBJS_SERVER) $(OBJS_TOOLS) $(LIB) 
 	@echo
 	@echo "[\033[35m----------------------------------------\033[0m]"
 	@echo "[\033[36m------- Compilation SERVER Done! -------\033[0m]"
 	@echo "[\033[35m----------------------------------------\033[0m]"
 
 $(NAME_CLIENT): $(LIB) $(OBJS)
-	$(CC) -o $(NAME_CLIENT) $(CFLAGS) $(OBJS_CLIENT) $(LIB)
+	$(CC) -o $(NAME_CLIENT) $(CFLAGS) $(OBJS_CLIENT) $(OBJS_TOOLS) $(LIB)
 	@echo
 	@echo "[\033[35m----------------------------------------\033[0m]"
 	@echo "[\033[36m------- Compilation CLIENT Done! -------\033[0m]"

@@ -1,18 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_p_server.h                                      :+:      :+:    :+:   */
+/*   send.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/25 17:36:14 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/01/28 14:30:31 by gpouyat          ###   ########.fr       */
+/*   Created: 2019/01/30 17:47:04 by gpouyat           #+#    #+#             */
+/*   Updated: 2019/01/30 18:18:44 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_P_SERVER_H
-# define FT_P_SERVER_H
+#include "../../includes/tools.h"
 
-# include "../libft/includes/libft.h"
-
-#endif
+void ftp_send(int sock, char *msg)
+{
+	int		ret;
+	ret = send(sock, msg, ft_strlen(msg), 0);
+	if (ret == -1)
+	{
+		log_error("send [%s] fail", msg);
+		ft_dprintf(STDERR_FILENO, "send [%s] fail", msg);
+	}
+}

@@ -6,14 +6,14 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 17:34:00 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/01/28 19:27:30 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/01/30 17:58:38 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sys/socket.h>
 #include <netdb.h>
 #include <arpa/inet.h>
-#include "../../includes/ft_p_server.h"
+#include "../../includes/server.h"
 
 int create_client(char *addr, int port)
 {

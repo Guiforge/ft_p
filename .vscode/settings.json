@@ -1,5 +1,8 @@
 {
 	"files.associations": {
-		"ft_p_server.h": "c"
+		"ft_p_server.h": "c",
+		"server.h": "c",
+		"libft.h": "c",
+		"tools.h": "c"
 	}
 }

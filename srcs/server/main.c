@@ -6,13 +6,11 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 17:34:00 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/01/28 19:29:08 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/01/30 18:17:21 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <sys/socket.h>
-#include <netdb.h>
-#include "../../includes/ft_p_server.h"
+#include "../../includes/server.h"
 
 int create_server(int port)
 {
@@ -44,6 +42,23 @@ int create_server(int port)
 	return (sock);
 }
 
+void		new_connection(int cs)
+{
+	int		pid;
+
+	if (cs < 0)
+		return ;
+	if ((pid = new_fork() < 0))
+		return ((void)over_p("server:", "Fork Fail", 0));
+	else if (pid > 0)
+	{
+		close(cs);
+		return ;
+	}
+	ftp_send(cs, FTP_MSG_WELCOM);
+	fork_exit(pid, 0);
+}
+
 int main(int ac, char **av)
 {
 	int					port;
@@ -51,21 +66,24 @@ int main(int ac, char **av)
 	int					cs;
 	unsigned int		cslen;
 	struct	sockaddr_in	csin;
-	ssize_t				r;
-	char				buf[1024];
+	// ssize_t				r;
+	// char				buf[1024];
 
 	(void)ac;
 	port = atoi(av[1]);
 	sock = create_server(port);
-	cs = accept(sock, (struct sockaddr *)&csin, &cslen);
-	// uint8_t c = 50;
-	ft_printf("HELLO");
-	ft_putendl_fd("220 Welcome on this server", sock);
-	while((r = read(cs, buf, 1024)))
+	while (42)
 	{
-		buf[r] = 0;
-		printf("received: %u [%s]\n", cslen, buf);
+		cs = accept(sock, (struct sockaddr *)&csin, &cslen);	
+		new_connection(cs);
 	}
+	// ft_printf("send %lld\n", send(cs, "220 Welcome on this server\n", ft_strlen("220 Welcome on this server\n"), 0));
+	// perror("send:");
+	// while((r = read(cs, buf, 1024)))
+	// {
+	// 	buf[r] = 0;
+	// 	printf("received: %u [%s]\n", cslen, buf);
+	// }
 	close(cs);
 	close(sock);
 }
