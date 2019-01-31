@@ -3,6 +3,7 @@
 		"ft_p_server.h": "c",
 		"server.h": "c",
 		"libft.h": "c",
-		"tools.h": "c"
+		"tools.h": "c",
+		"socket.h": "c"
 	}
 }

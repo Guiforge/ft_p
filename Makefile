@@ -6,13 +6,13 @@
 #    By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/05 12:29:27 by gpouyat           #+#    #+#              #
-#    Updated: 2019/01/30 18:18:03 by gpouyat          ###   ########.fr        #
+#    Updated: 2019/01/31 20:59:48 by gpouyat          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # .NOTPARALLEL:
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re miniclean minifclean minire
 
 C_NO = \033[0m
 C_G = \033[0;32m
@@ -25,7 +25,7 @@ SRCS_SERVER			+= /server/main.c
 
 SRCS_CLIENT			+= /client/main.c
 
-SRCS_TOOLS			+= /tools/fork.c /tools/send.c
+SRCS_TOOLS			+= /tools/send.c /tools/error.c
 
 SRCS = $(SRCS_SERVER) $(SRCS_CLIENT) $(SRCS_TOOLS)
 SRC_SUBDIR = client server tools
@@ -116,14 +116,24 @@ $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
 $(LIB):
 	make DEBUG=$(DEBUG) DEV=$(DEV) SAN=$(SAN) -C $(LIB_PATH)
 
+miniclean:
+	@echo "\033[35m$(NAME)  :\033[0m [\033[31mSuppression des .o du projet \033[0m]"
+	$(RM) $(OBJS_DIR)
+
+minifclean: miniclean
+	@echo "\033[35m$(NAME)  :\033[0m [\033[31mSuppression de $(NAME_CLIENT) et $(NAME_SERVER)\033[0m]"
+	$(RM) $(NAME_CLIENT) $(NAME_SERVER)
+
+minire: minifclean all
+
 clean:
 	@echo "\033[35m$(NAME)  :\033[0m [\033[31mSuppression des .o\033[0m]"
 	$(RM) $(OBJS_DIR)
 	make clean -C $(LIB_PATH)
 
 fclean: clean
-	@echo "\033[35m$(NAME)  :\033[0m [\033[31mSuppression de $(NAME)\033[0m]"
-	$(RM) $(NAME)
+	@echo "\033[35m$(NAME)  :\033[0m [\033[31mSuppression de $(NAME_CLIENT) et $(NAME_SERVER)\033[0m]"
+	$(RM) $(NAME_CLIENT) $(NAME_SERVER)
 	make fclean -C $(LIB_PATH)
 
 re: fclean all

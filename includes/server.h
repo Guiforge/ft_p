@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 17:36:14 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/01/30 18:16:14 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/01/31 11:11:58 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,6 @@
 # include "./tools.h"
 
 #define FTP_PRGM "server ftp"
+#define FTP_PORT_LISTEN 42
 
 #endif

@@ -6,23 +6,25 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 17:55:10 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/01/30 18:02:07 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/01/31 20:59:33 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TOOLS_H
 # define TOOLS_H
 
+# include "./proto.h"
 # include "../libft/includes/libft.h"
 # include <sys/socket.h>
 # include <netdb.h>
 # include <sys/types.h>
 
-#define FTP_MAC_NPROC 42
+#define FTP_MAX_NPROC 1
 
 void		ftp_send(int sock, char *msg);
 pid_t		new_fork(void);
-void		fork_supp(pid_t pid);
-void		fork_exit(pid_t pid, int ret);
+int			ftp_err_close(int fd, enum e_logger_lvl lvl, const char *fmt, ...);
+int			ftp_err_close_exit(int fd, enum e_logger_lvl lvl, const char *fmt, ...);
+int			ftp_over_cconnect(int cs, char *msg, int ret);
 
 #endif

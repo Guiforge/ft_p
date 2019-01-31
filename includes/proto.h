@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 18:03:27 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/01/30 18:18:35 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/01/31 11:09:37 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 # define PROTO_H
 
 # define FTP_CODE_OK "200"
+# define FTP_CODE_CLOSE "426"
 # define FTP_MSG_WELCOM FTP_CODE_OK " Welcome on this server by gpouyat!!\n"
+# define FTP_MSG_ABRT FTP_CODE_CLOSE " Connection closed"
 /*
          110 Restart marker reply. In this case, the text is exact and not left to the particular implementation; it must read:      MARK yyyy = mmmm Where yyyy is User-process data stream marker, and mmmm server's equivalent marker (note the spaces between markers and "=").
          120 Service ready in nnn minutes.
@@ -40,7 +42,6 @@
          350 Requested file action pending further inform
          421 Service not available, closing control connection. This may be a reply to any command if the service knows it must shut down.
          425 Can't open data connection.
-         426 Connection closed; transfer aborted.
          450 Requested file action not taken. File unavailable (e.g., file busy).
          451 Requested action aborted. Local error in processing.
          452 Requested action not taken. Insufficient storage space in system.
