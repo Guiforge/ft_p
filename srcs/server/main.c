@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 17:34:00 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/01/31 17:23:55 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/01 18:22:41 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,8 @@ int create_server(int port)
 	return (sock);
 }
 
-void		handle_cmd(int cs)
-{
-	char			*line;
 
-	while(get_next_line(cs, &line) == 1)
-	{
-		ft_printf("received: [%s]\n", line);
-	}
-}
-
-void		new_connection(int sock, int cs)
+void		new_connection(t_ftp context, int sock, int cs)
 {
 	int		pid;
 
@@ -59,8 +50,20 @@ void		new_connection(int sock, int cs)
 	}
 	close(sock);
 	ftp_send(cs, FTP_MSG_WELCOM);
-	handle_cmd(cs);
+	ftp_handle_cmd(context, cs);
 	exit(EXIT_SUCCESS);
+}
+
+t_ftp	ftp_init(void)
+{
+	t_ftp	context;
+
+	if(!getcwd(context.pwd, PATH_MAX))
+	{
+		log_fatal("getcwd fail");
+		exit(EXIT_FAILURE);
+	}
+	return (context);
 }
 
 int main(int ac, char **av)
@@ -71,6 +74,7 @@ int main(int ac, char **av)
 	unsigned int		cslen;
 	struct	sockaddr_in	csin;
 
+	t_ftp context = ftp_init();
 	(void)ac;
 	log_init(NULL, STDERR_FILENO);
 	port = atoi(av[1]);
@@ -78,7 +82,7 @@ int main(int ac, char **av)
 	while (42)
 	{
 		cs = accept(sock, (struct sockaddr *)&csin, &cslen);
-		new_connection(sock, cs);
+		new_connection(context, sock, cs);
 		ft_printf("READY\n");
 	}
 	close(cs);

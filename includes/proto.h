@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 18:03:27 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/01/31 11:09:37 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/01 18:54:40 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,13 @@
 
 # define FTP_CODE_OK "200"
 # define FTP_CODE_CLOSE "426"
+# define FTP_CODE_OK_LOG "230"
+# define FTP_CODE_NEED_PASS "331"
 # define FTP_MSG_WELCOM FTP_CODE_OK " Welcome on this server by gpouyat!!\n"
-# define FTP_MSG_ABRT FTP_CODE_CLOSE " Connection closed"
+# define FTP_MSG_ABRT FTP_CODE_CLOSE " Connection closed\n"
+# define FTP_MSG_OK_LOG FTP_CODE_OK_LOG " User logged in, proceed.\n"
+# define FTP_MSG_NEED_PASS FTP_CODE_NEED_PASS " User name okay, need password.\n"
+
 /*
          110 Restart marker reply. In this case, the text is exact and not left to the particular implementation; it must read:      MARK yyyy = mmmm Where yyyy is User-process data stream marker, and mmmm server's equivalent marker (note the spaces between markers and "=").
          120 Service ready in nnn minutes.
@@ -34,10 +39,8 @@
          225 Data connection open; no transfer in progress.
          226 Closing data connection. Requested file action successful (for example, file transfer or file abort).
          227 Entering Passive Mode (h1,h2,h3,h4,p
-         230 User logged in, proceed.
          250 Requested file action okay, completed.
          257 "PATHNAME" cr
-         331 User name okay, need password.
          332 Need account for login.
          350 Requested file action pending further inform
          421 Service not available, closing control connection. This may be a reply to any command if the service knows it must shut down.
@@ -57,5 +60,12 @@
          552 Requested file action aborted. Exceeded storage allocation (for current directory or dataset).
          553 Requested action not taken. File name not allowed.
 */
+
+typedef struct s_ftp_cmd
+{
+	char	*cmd;
+	int		(*handler)(void *contex, int cs, char *cmd);
+}			t_ftp_cmd;
+
 
 #endif
