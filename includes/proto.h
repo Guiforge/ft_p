@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 18:03:27 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/01 18:54:40 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/04 17:09:27 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,26 @@
 # define FTP_CODE_CLOSE "426"
 # define FTP_CODE_OK_LOG "230"
 # define FTP_CODE_NEED_PASS "331"
+# define FTP_CODE_NEED_ACC "332"
+# define FTP_CODE_KO_LOG "530"
+# define FTP_CODE_TOO_LONG "500"
+# define FTP_CODE_CMD_NOT "502"
+# define FTP_CODE_SYST "215"
+# define FTP_CODE_OK_PWD "257"
+# define FTP_CODE_F_NOT_F "550"
+# define FTP_CODE_QUIT "221"
+
+# define FTP_MSG_QUIT FTP_CODE_QUIT " Goodbye 👋 \n"
+# define FTP_MSG_F_NOT_F FTP_CODE_F_NOT_F " Requested action not taken. File unavailable (e.g., file not found, no access).\n"
+# define FTP_MSG_SYST FTP_CODE_SYST " MACOS of 42!! \n"
+# define FTP_MSG_TOO_LONG FTP_CODE_TOO_LONG " Syntax error, command unrecognized. This may include errors such as command line too long.\n"
 # define FTP_MSG_WELCOM FTP_CODE_OK " Welcome on this server by gpouyat!!\n"
 # define FTP_MSG_ABRT FTP_CODE_CLOSE " Connection closed\n"
 # define FTP_MSG_OK_LOG FTP_CODE_OK_LOG " User logged in, proceed.\n"
 # define FTP_MSG_NEED_PASS FTP_CODE_NEED_PASS " User name okay, need password.\n"
+# define FTP_MSG_NEED_ACC FTP_CODE_NEED_ACC " Need account for login.\n"
+# define FTP_MSG_KO_LOG FTP_CODE_KO_LOG " Login incorrect.\n"
+# define FTP_MSG_CMD_NOT FTP_CODE_CMD_NOT " Command not implemented.\n"
 
 /*
          110 Restart marker reply. In this case, the text is exact and not left to the particular implementation; it must read:      MARK yyyy = mmmm Where yyyy is User-process data stream marker, and mmmm server's equivalent marker (note the spaces between markers and "=").
@@ -33,29 +49,22 @@
          212 Directory status.
          213 File status.
          214 Help message. On how to use the server or the meaning of a particular non-standard command.  This reply is useful only to the human user.
-         215 NAME system type. Where NAME is an official system name from the list in the Assigned Numbers document.
          220 Service ready for new user.
          221 Service closing control connection. Logged out if appropriate.
          225 Data connection open; no transfer in progress.
          226 Closing data connection. Requested file action successful (for example, file transfer or file abort).
          227 Entering Passive Mode (h1,h2,h3,h4,p
          250 Requested file action okay, completed.
-         257 "PATHNAME" cr
-         332 Need account for login.
          350 Requested file action pending further inform
          421 Service not available, closing control connection. This may be a reply to any command if the service knows it must shut down.
          425 Can't open data connection.
          450 Requested file action not taken. File unavailable (e.g., file busy).
          451 Requested action aborted. Local error in processing.
          452 Requested action not taken. Insufficient storage space in system.
-         500 Syntax error, command unrecognized. This may include errors such as command line too long.
          501 Syntax error in parameters or arguments.
-         502 Command not implemented.
          503 Bad sequence of commands.
          504 Command not implemented for that parameter.
-         530 Not logged in.
          532 Need account for storing files.
-         550 Requested action not taken. File unavailable (e.g., file not found, no access).
          551 Requested action aborted. Page type unknown.
          552 Requested file action aborted. Exceeded storage allocation (for current directory or dataset).
          553 Requested action not taken. File name not allowed.

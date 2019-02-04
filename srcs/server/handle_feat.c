@@ -1,22 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_ls.c                                        :+:      :+:    :+:   */
+/*   handle_feat.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/01 17:27:02 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/04 17:02:57 by gpouyat          ###   ########.fr       */
+/*   Created: 2019/02/04 16:18:23 by gpouyat           #+#    #+#             */
+/*   Updated: 2019/02/04 16:18:52 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/server.h"
 
-int		handle_ls(t_ftp *context, int cs, char *cmd)
+int		handle_feat(t_ftp *context, int cs, char *cmd)
 {
-	(void)context;
-	(void)cs;
 	(void)cmd;
-	log_debug("HELLO !");
-	return(0);
+	(void)context;
+	ftp_send(cs, FTP_MSG_SYST);
+	return(EXIT_SUCCESS);
 }

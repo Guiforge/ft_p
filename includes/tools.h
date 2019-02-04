@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 17:55:10 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/01/31 20:59:33 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/04 16:01:16 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <sys/types.h>
 
 #define FTP_MAX_NPROC 1
+#define FTP_LOG_SEND_FMT "[sock: %d] {yellow}(%s){no} %s"
 
 void		ftp_send(int sock, char *msg);
 pid_t		new_fork(void);
