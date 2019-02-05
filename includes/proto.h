@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 18:03:27 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/04 17:09:27 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/05 13:30:00 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@
 typedef struct s_ftp_cmd
 {
 	char	*cmd;
-	int		(*handler)(void *contex, int cs, char *cmd);
+	int		(*handler)(void *contex, char *cmd);
 }			t_ftp_cmd;
 
 

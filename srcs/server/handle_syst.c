@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_ls.c                                        :+:      :+:    :+:   */
+/*   handle_syst.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/01 17:27:02 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/05 13:36:07 by gpouyat          ###   ########.fr       */
+/*   Created: 2019/02/04 16:18:23 by gpouyat           #+#    #+#             */
+/*   Updated: 2019/02/05 13:43:01 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/server.h"
 
-int		handle_ls(t_ftp_server *serv, char *cmd)
+int		handle_syst(t_ftp_server *serv, char *cmd)
 {
-	(void)serv;
 	(void)cmd;
-	log_debug("HELLO !");
-	return(0);
+	(void)serv;
+	ftp_send(serv->pi.cs, FTP_MSG_SYST);
+	return(EXIT_SUCCESS);
 }

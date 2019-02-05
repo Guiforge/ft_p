@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 17:34:00 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/01 18:22:41 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/05 13:44:40 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,32 +32,14 @@ int create_server(int port)
 }
 
 
-void		new_connection(t_ftp context, int sock, int cs)
+
+t_ftp_server	ftp_init(void)
 {
-	int		pid;
+	t_ftp_server	context;
 
-	if (cs < 0)
-	{
-		log_error("accept error");
-		return ;
-	}
-	if ((pid = fork()) < 0)
-		return ((void)ftp_over_cconnect(cs, "Error fork", 0));
-	else if (pid > 0)
-	{
-		close(cs);
-		return ;
-	}
-	close(sock);
-	ftp_send(cs, FTP_MSG_WELCOM);
-	ftp_handle_cmd(context, cs);
-	exit(EXIT_SUCCESS);
-}
-
-t_ftp	ftp_init(void)
-{
-	t_ftp	context;
-
+	ft_memset(&context.dtp, -1, sizeof(context.dtp));
+	ft_memset(&context.pi, -1, sizeof(context.pi));
+	log_debug("%d %d %d %d", context.dtp.sock, context.dtp.cs, context.pi.sock, context.pi.cs);
 	if(!getcwd(context.pwd, PATH_MAX))
 	{
 		log_fatal("getcwd fail");
@@ -69,22 +51,21 @@ t_ftp	ftp_init(void)
 int main(int ac, char **av)
 {
 	int					port;
-	int					sock;
-	int					cs;
+	t_ftp_server		serv;
 	unsigned int		cslen;
 	struct	sockaddr_in	csin;
 
-	t_ftp context = ftp_init();
-	(void)ac;
 	log_init(NULL, STDERR_FILENO);
-	port = atoi(av[1]);
-	sock = create_server(port);
+	serv = ftp_init();
+	// Protect !!
+				(void)ac;
+				port = atoi(av[1]);
+	serv.pi.sock = create_server(port);
 	while (42)
 	{
-		cs = accept(sock, (struct sockaddr *)&csin, &cslen);
-		new_connection(context, sock, cs);
-		ft_printf("READY\n");
+		serv.pi.cs = accept(serv.pi.sock, (struct sockaddr *)&csin, &cslen);
+		ftp_serv_new_connect(&serv);
 	}
-	close(cs);
-	close(sock);
+	close_reset(&(serv.pi.cs));
+	close_reset(&(serv.pi.sock));
 }
