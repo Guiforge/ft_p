@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 17:36:14 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/05 13:34:46 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/09 12:42:23 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ typedef struct			s_ftp_server {
 	t_ftp_connection	dtp;
 }						t_ftp_server;
 
+#define FTP_BACKLOG 42
 
+int			ftp_serv_new_sock_bind(int port);
 void		ftp_serv_new_connect(t_ftp_server *serv);
 void		ftp_handle_cmd(t_ftp_server *serv);
 int			handle_ls(t_ftp_server *serv, char *cmd);
@@ -44,5 +46,7 @@ int			handle_user(t_ftp_server *serv, char *cmd);
 int			handle_pass(t_ftp_server *serv, char *cmd);
 int			handle_syst(t_ftp_server *serv, char *cmd);
 int			handle_pwd(t_ftp_server *serv, char *cmd);
+int			handle_pasv(t_ftp_server *serv);
+
 
 #endif

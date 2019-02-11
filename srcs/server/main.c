@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 17:34:00 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/05 13:44:40 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/11 11:24:49 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,13 @@ int create_server(int port)
 	return (sock);
 }
 
-
-
 t_ftp_server	ftp_init(void)
 {
 	t_ftp_server	context;
 
 	ft_memset(&context.dtp, -1, sizeof(context.dtp));
 	ft_memset(&context.pi, -1, sizeof(context.pi));
-	log_debug("%d %d %d %d", context.dtp.sock, context.dtp.cs, context.pi.sock, context.pi.cs);
-	if(!getcwd(context.pwd, PATH_MAX))
+	if (!getcwd(context.pwd, PATH_MAX))
 	{
 		log_fatal("getcwd fail");
 		exit(EXIT_FAILURE);
@@ -63,6 +60,7 @@ int main(int ac, char **av)
 	serv.pi.sock = create_server(port);
 	while (42)
 	{
+		cslen = sizeof(csin);
 		serv.pi.cs = accept(serv.pi.sock, (struct sockaddr *)&csin, &cslen);
 		ftp_serv_new_connect(&serv);
 	}

@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 17:03:24 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/05 13:29:15 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/11 16:22:25 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static void	handle_quit(t_ftp_server *context, char *cmd);
 
 static t_ftp_cmd	g_hands[] = {
 	{"QUIT", (int (*)(void *, char *))&handle_quit},
+	{"PASV", (int (*)(void *, char *))&handle_pasv},
 	{"PWD", (int (*)(void *, char *))&handle_pwd},
 	{"LS", (int (*)(void *, char *))&handle_ls},
 	{"LIST", (int (*)(void *, char *))&handle_ls},
@@ -50,6 +51,8 @@ static void	exec_handler(t_ftp_server *serv, char *cmd)
 	size_t	i;
 
 	i = 0;
+	//Void mode carriage return !!
+	ft_overwrite(cmd, 13, '\0', -1);
 	log_debug("received: %s", cmd);
 	if (ft_strlen_max(cmd, FTP_MAX_LEN_CMD + 1) >= FTP_MAX_LEN_CMD)
 	{

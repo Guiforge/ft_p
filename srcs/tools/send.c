@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 17:47:04 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/04 16:56:17 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/11 15:35:22 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,10 @@ void ftp_send(int sock, char *msg)
 	size_t	len;
 	
 	len = ft_strlen(msg);
-	static_ftp_send_log(sock, msg);
 	ret = send(sock, msg, len, 0);
 	if (ret == -1)
-	{
 		log_error("send [%s] fail", msg);
-		ft_dprintf(STDERR_FILENO, "send [%s] fail", msg);
-	}
+	else
+		static_ftp_send_log(sock, msg);		
+	
 }

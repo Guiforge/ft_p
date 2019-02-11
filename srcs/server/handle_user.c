@@ -6,13 +6,14 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 18:20:35 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/05 13:28:00 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/11 16:54:45 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/server.h"
 
 static t_ftp_user	g_users[] = {
+	{"a", "a", False},
 	{"toto", "toto", False},
 	{"admin", "admin", True},
 	{NULL, NULL, False}
@@ -43,7 +44,7 @@ int					handle_user(t_ftp_server *serv, char *cmd)
 	while (g_users[i].user)
 	{
 		len_tmp = ft_strlen(g_users[i].user);
-		if (len_tmp + 1 == len_user && !ft_strncmp(g_users[i].user,\
+		if (len_tmp == len_user && !ft_strncmp(g_users[i].user,\
 														user_name, len_tmp))
 		{
 			g_user = &g_users[i];
@@ -66,17 +67,18 @@ int					handle_pass(t_ftp_server *serv, char *cmd)
 	{
 		reset_user(serv);
 		ftp_send(serv->pi.cs, FTP_MSG_KO_LOG);
+		sleep(3);
 		return (1);
 	}
 	pass = &cmd[5];
 	len = ft_strlen(g_user->pass);
-	if (len + 1 == ft_strlen(pass) && !ft_strncmp(g_user->pass, pass, len))
+	if (len == ft_strlen(pass) && !ft_strncmp(g_user->pass, pass, len))
 	{
 		serv->user_log = *g_user;
 		ftp_send(serv->pi.cs, FTP_MSG_OK_LOG);
 		return (0);
 	}
-	sleep(5);
+	sleep(3);
 	ftp_send(serv->pi.cs, FTP_MSG_KO_LOG);
 	return (0);
 }
