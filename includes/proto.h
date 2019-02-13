@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 18:03:27 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/11 15:44:06 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/13 10:27:43 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # define FTP_CODE_OK_ODATA "150"
 # define FTP_CODE_CLOSE_ODATA "226" 
 
-# define FTP_MSG_CLOSE_ODATA FTP_CODE_CLOSE_ODATA " Closing data connection. Requested file action successful.\n"
+# define FTP_MSG_CLOSE_ODATA FTP_CODE_CLOSE_ODATA " Closing data connection.\n"
 # define FTP_MSG_OK_ODATA FTP_CODE_OK_ODATA " File status okay; about to open data connection.\n"
 # define FTP_MSG_KO_ODATA FTP_CODE_KO_ODATA " Can't open data connection.\n"
 # define FTP_MSG_QUIT FTP_CODE_QUIT " Goodbye 👋 \n"

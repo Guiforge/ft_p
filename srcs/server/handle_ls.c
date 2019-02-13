@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 17:27:02 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/11 16:43:30 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/13 10:31:15 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static void ftp_send_cmd(t_ftp_server *serv, int fdin)
 {
 	char	buffer[2048];
+	char	*msg;
 	ssize_t	len;
 
 	ft_bzero(buffer, 2048);
@@ -22,8 +23,10 @@ static void ftp_send_cmd(t_ftp_server *serv, int fdin)
 	while((len = read(fdin, buffer, 2047)) && len != -1)
 	{
 		buffer[len - 1] = 0;
-		log_debug("Send: '%s' -- %u", buffer, len);
-		send(serv->dtp.cs, buffer, len, 0);
+		msg = ftp_cr_end(buffer, len);
+		// TODO: CSR MODE ASCII ?
+		send(serv->dtp.cs, msg, ft_strlen(msg), 0);
+		free(msg);
 	}
 	send(serv->dtp.cs, "\r", 1, 0);
 	close_reset(&serv->dtp.cs);

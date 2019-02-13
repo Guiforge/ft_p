@@ -6,15 +6,14 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 17:03:24 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/11 16:22:25 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/11 16:59:26 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/server.h"
 
 /*
-ls : liste le répertoire courant du serveur
-•
+.
 cd : change le répertoire courant du serveur
 •
 get _file_ : récupère le fichier _file_ du serveur vers le client
@@ -51,7 +50,7 @@ static void	exec_handler(t_ftp_server *serv, char *cmd)
 	size_t	i;
 
 	i = 0;
-	//Void mode carriage return !!
+	//TODO: Void mode carriage return !!
 	ft_overwrite(cmd, 13, '\0', -1);
 	log_debug("received: %s", cmd);
 	if (ft_strlen_max(cmd, FTP_MAX_LEN_CMD + 1) >= FTP_MAX_LEN_CMD)

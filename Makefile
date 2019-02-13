@@ -6,7 +6,7 @@
 #    By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/05 12:29:27 by gpouyat           #+#    #+#              #
-#    Updated: 2019/02/09 11:48:08 by gpouyat          ###   ########.fr        #
+#    Updated: 2019/02/11 18:16:05 by gpouyat          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ SRCS_SERVER			+= /server/main.c /server/handle.c /server/handle_ls.c\
 
 SRCS_CLIENT			+= /client/main.c
 
-SRCS_TOOLS			+= /tools/send.c /tools/error.c
+SRCS_TOOLS			+= /tools/send.c /tools/error.c /tools/ascii_mode.c
 
 SRCS = $(SRCS_SERVER) $(SRCS_CLIENT) $(SRCS_TOOLS)
 SRC_SUBDIR = client server tools

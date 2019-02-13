@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 17:55:10 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/09 13:18:02 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/13 10:11:36 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,6 @@ int			ftp_err_close(int fd, enum e_logger_lvl lvl, const char *fmt, ...);
 int			ftp_err_close_exit(int fd, enum e_logger_lvl lvl, const char *fmt, ...);
 int			ftp_over_cconnect(int cs, char *msg, int ret);
 char		*ftp_get_ip(void);
+char		*ftp_cr_end(char *buffer, size_t len);
 
 #endif

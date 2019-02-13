@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 17:34:00 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/11 11:24:49 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/11 16:56:26 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int main(int ac, char **av)
 
 	log_init(NULL, STDERR_FILENO);
 	serv = ftp_init();
-	// Protect !!
+	// TODO: Protect !!
 				(void)ac;
 				port = atoi(av[1]);
 	serv.pi.sock = create_server(port);
