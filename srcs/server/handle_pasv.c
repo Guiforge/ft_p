@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 15:47:16 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/11 11:17:51 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/13 15:20:01 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,14 @@ static	void ftp_serv_concate_ip_port(char buffer[64], char *addr, in_port_t port
 }
 
 
-int	handle_pasv(t_ftp_server *serv)
+int	handle_pasv(t_ftp_server *serv, char *cmd)
 {
 	struct	sockaddr_in sin;
 	socklen_t 			len;
 	char				*addr;
 	char				msg[64];
 
+	(void)cmd;
 	serv->dtp.sock = ftp_serv_new_sock_bind(0);
 	if (listen(serv->dtp.sock, FTP_PORT_LISTEN))
 		close_reset(&serv->dtp.sock);

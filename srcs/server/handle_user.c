@@ -6,11 +6,18 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 18:20:35 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/11 16:54:45 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/14 17:29:58 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/server.h"
+
+/*
+** There is no protection or check for wrong username:
+**	- same username
+**	- username with special char (\n . .. / )
+**	- username too long
+*/
 
 static t_ftp_user	g_users[] = {
 	{"a", "a", False},
@@ -28,6 +35,13 @@ static void			reset_user(t_ftp_server *serv)
 	serv->user_log.user = NULL;
 	serv->user_log.pass = NULL;
 	serv->user_log.admin = False;
+}
+
+t_bool ftp_serv_is_log(t_ftp_server *serv)
+{
+	if(serv && ft_strlen(serv->user_log.user))
+		return (True);
+	return (False);
 }
 
 int					handle_user(t_ftp_server *serv, char *cmd)
@@ -56,6 +70,16 @@ int					handle_user(t_ftp_server *serv, char *cmd)
 	return (0);
 }
 
+static			t_bool static_init_user(t_ftp_server *serv)
+{
+	char home[PATH_MAX + 1];
+
+	if (serv->user_log.admin)
+		return (True);
+	ftp_serv_get_home(serv, home);
+	return (ftp_serv_mv(serv, home));
+}
+
 int					handle_pass(t_ftp_server *serv, char *cmd)
 {
 	size_t	i;
@@ -63,22 +87,29 @@ int					handle_pass(t_ftp_server *serv, char *cmd)
 	char	*pass;
 
 	i = 0;
-	if (!g_user)
+	if (!g_user || !(cmd && cmd[0] && cmd[1] && cmd[2] && cmd[3] && cmd[4]))
 	{
 		reset_user(serv);
-		ftp_send(serv->pi.cs, FTP_MSG_KO_LOG);
 		sleep(3);
-		return (1);
+		ftp_send(serv->pi.cs, FTP_MSG_KO_LOG);
+		return (-1);
 	}
 	pass = &cmd[5];
 	len = ft_strlen(g_user->pass);
 	if (len == ft_strlen(pass) && !ft_strncmp(g_user->pass, pass, len))
 	{
 		serv->user_log = *g_user;
-		ftp_send(serv->pi.cs, FTP_MSG_OK_LOG);
+		if (static_init_user(serv))
+			ftp_send(serv->pi.cs, FTP_MSG_OK_LOG);
+		else
+		{
+			log_error("Can't mouv into of user: %s", serv->user_log.user);
+			reset_user(serv);
+			ftp_send(serv->pi.cs, FTP_MSG_KO_LOG);
+		}
 		return (0);
 	}
 	sleep(3);
 	ftp_send(serv->pi.cs, FTP_MSG_KO_LOG);
-	return (0);
+	return (-1);
 }

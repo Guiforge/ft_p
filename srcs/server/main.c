@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 17:34:00 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/11 16:56:26 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/13 14:41:43 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ t_ftp_server	ftp_init(void)
 		log_fatal("getcwd fail");
 		exit(EXIT_FAILURE);
 	}
+	ft_strcpy(context.base, context.pwd);
 	return (context);
 }
 
