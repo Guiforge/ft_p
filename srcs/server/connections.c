@@ -6,13 +6,13 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 11:50:15 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/09 12:42:04 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/15 15:42:50 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/server.h"
 
-void		ftp_serv_new_connect(t_ftp_server *serv)
+void	ftp_serv_new_connect(t_ftp_server *serv)
 {
 	int		pid;
 
@@ -29,25 +29,25 @@ void		ftp_serv_new_connect(t_ftp_server *serv)
 		return ;
 	}
 	close_reset(&(serv->pi.sock));
-	ftp_send(serv->pi.cs, FTP_MSG_WELCOM);
+	ftp_send(serv->pi.cs, FTP_M_WELCOM);
 	ftp_handle_cmd(serv);
 	exit(EXIT_SUCCESS);
 }
 
 int		ftp_serv_new_sock_bind(int port)
 {
-	struct sockaddr_in		sin; 
+	struct sockaddr_in		sin;
 	int						sock;
 	struct protoent			*proto;
 
 	if (!(proto = getprotobyname("tcp")))
-		return(over_log(-1, LOG_LVL_ERROR, "getprotobyname(tcp)"));
+		return (over_log(-1, LOG_LVL_ERROR, "getprotobyname(tcp)"));
 	sock = socket(PF_INET, SOCK_STREAM, proto->p_proto);
 	sin.sin_family = AF_INET;
 	sin.sin_port = htons(port);
 	sin.sin_len = sizeof(sin);
 	sin.sin_addr.s_addr = htonl(INADDR_ANY);
-	if((bind(sock, (const struct sockaddr *)&sin, sizeof(sin))) == -1)
+	if ((bind(sock, (const struct sockaddr *)&sin, sizeof(sin))) == -1)
 		close_reset(&sock);
 	return (sock);
 }

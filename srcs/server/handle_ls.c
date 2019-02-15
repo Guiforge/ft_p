@@ -6,21 +6,21 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 17:27:02 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/15 14:46:49 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/15 15:42:50 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/server.h"
 
-static void ftp_send_cmd(t_ftp_server *serv, int fdin)
+static void		ftp_send_cmd(t_ftp_server *serv, int fdin)
 {
 	char	buffer[2048];
 	char	*msg;
 	ssize_t	len;
 
 	ft_bzero(buffer, 2048);
-	ftp_send(serv->pi.cs, FTP_MSG_OK_ODATA);
-	while((len = read(fdin, buffer, 2047)) && len != -1)
+	ftp_send(serv->pi.cs, FTP_M_OK_ODATA);
+	while ((len = read(fdin, buffer, 2047)) && len != -1)
 	{
 		buffer[len - 1] = 0;
 		msg = ftp_cr_end(buffer, len);
@@ -31,10 +31,10 @@ static void ftp_send_cmd(t_ftp_server *serv, int fdin)
 	send(serv->dtp.cs, "\r\n", 2, 0);
 	close_reset(&serv->dtp.cs);
 	close_reset(&serv->dtp.sock);
-	ftp_send(serv->pi.cs, FTP_MSG_CLOSE_ODATA);
+	ftp_send(serv->pi.cs, FTP_M_CLOSE_ODATA);
 }
 
-static int ftp_run_ls_father(t_ftp_server *sev, int *pipes, pid_t pid)
+static int		ftp_run_ls_father(t_ftp_server *sev, int *pipes, pid_t pid)
 {
 	int		status;
 
@@ -50,7 +50,7 @@ static int ftp_run_ls_father(t_ftp_server *sev, int *pipes, pid_t pid)
 	return (WEXITSTATUS(status));
 }
 
-static void ftp_run_ls_child(t_ftp_server *serv, int *pipes, char *cmd)
+static void		ftp_run_ls_child(t_ftp_server *serv, int *pipes, char *cmd)
 {
 	char *path;
 
@@ -59,13 +59,12 @@ static void ftp_run_ls_child(t_ftp_server *serv, int *pipes, char *cmd)
 		path = ft_secu_add(ft_exp_path(cmd, serv->pwd), M_LVL_FUNCT);
 	else
 		path = ft_secu_add(ft_exp_path(".", serv->pwd), M_LVL_FUNCT);
-	
 	if (ftp_serv_check(serv, path) == False)
 	{
-		ftp_send(serv->dtp.cs, FTP_MSG_F_NOT_A);
+		ftp_send(serv->dtp.cs, FTP_M_F_NOT_A);
 		exit(EXIT_FAILURE);
 	}
-	if (dup2(pipes[1], 2) !=-1 && dup2(pipes[1], 1) != -1)
+	if (dup2(pipes[1], 2) != -1 && dup2(pipes[1], 1) != -1)
 		execl("/bin/ls", "ls", "-la", path, NULL);
 	else
 		log_fatal("Dup2 Fail");
@@ -75,13 +74,13 @@ static void ftp_run_ls_child(t_ftp_server *serv, int *pipes, char *cmd)
 	exit(EXIT_FAILURE);
 }
 
-static int ftp_run_ls(t_ftp_server *serv, char *cmd)
+static int		ftp_run_ls(t_ftp_server *serv, char *cmd)
 {
 	int		pipes[2];
 	pid_t	pid;
- 
+
 	if (pipe(pipes) == -1)
-		return(over_log(-1, LOG_LVL_ERROR, "pipes fail"));
+		return (over_log(-1, LOG_LVL_ERROR, "pipes fail"));
 	if ((pid = fork()) == -1)
 	{
 		log_error("Fork fail!");
@@ -96,23 +95,23 @@ static int ftp_run_ls(t_ftp_server *serv, char *cmd)
 	return (-1);
 }
 
-int		handle_ls(t_ftp_server *serv, char *cmd)
+int				handle_ls(t_ftp_server *serv, char *cmd)
 {
 	unsigned int		cslen;
-	struct	sockaddr_in	csin;
+	struct sockaddr_in	csin;
 
 	if (serv->dtp.sock == -1)
 	{
-		ftp_send(serv->pi.cs, FTP_MSG_ABRT);
+		ftp_send(serv->pi.cs, FTP_M_ABRT);
 		return (-1);
 	}
 	cslen = sizeof(csin);
 	serv->dtp.cs = accept(serv->dtp.sock, (struct sockaddr *)&csin, &cslen);
 	if (serv->dtp.cs == -1)
 	{
-		ftp_send(serv->pi.sock, FTP_MSG_KO_ODATA);
+		ftp_send(serv->pi.sock, FTP_M_KO_ODATA);
 		close_reset(&serv->dtp.sock);
 	}
 	ftp_run_ls(serv, cmd);
-	return(0);
+	return (0);
 }

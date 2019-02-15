@@ -6,13 +6,20 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 17:00:35 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/15 14:32:54 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/15 15:38:26 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/server.h"
 
-t_bool	ftp_serv_check(t_ftp_server *serv, char *path)
+t_bool				ftp_serv_is_log(t_ftp_server *serv)
+{
+	if (serv && ft_strlen(serv->user_log.user))
+		return (True);
+	return (False);
+}
+
+t_bool				ftp_serv_check(t_ftp_server *serv, char *path)
 {
 	char		*new;
 	char		home[PATH_MAX + 1];
@@ -32,7 +39,8 @@ t_bool	ftp_serv_check(t_ftp_server *serv, char *path)
 	return (False);
 }
 
-void	ftp_serv_get_home(t_ftp_server *serv, char home[PATH_MAX + 1])
+void				ftp_serv_get_home(t_ftp_server *serv,\
+														char home[PATH_MAX + 1])
 {
 	ft_bzero(home, PATH_MAX + 1);
 	ft_strcpy(home, serv->base);

@@ -6,18 +6,20 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 15:47:16 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/15 14:33:23 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/15 15:42:50 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/server.h"
 #include <arpa/inet.h>
 
-static	void ftp_serv_concate_ip_port(char buffer[64], char *addr, in_port_t port)
+static void	ftp_serv_concate_ip_port(char buffer[64], char *addr,\
+																in_port_t port)
 {
 	char	*tmp;
+
 	ft_bzero(buffer, 64);
-	ft_strcat(buffer, FTP_MSG_PASV);
+	ft_strcat(buffer, FTP_M_PASV);
 	ft_strcat(buffer, addr);
 	ft_strcat(buffer, ",");
 	tmp = ft_itoa(((port >> 8) & 0xff));
@@ -31,11 +33,10 @@ static	void ftp_serv_concate_ip_port(char buffer[64], char *addr, in_port_t port
 	ft_secu_free_lvl(M_LVL_FUNCT);
 }
 
-
-int	handle_pasv(t_ftp_server *serv, char *cmd)
+int			handle_pasv(t_ftp_server *serv, char *cmd)
 {
-	struct	sockaddr_in sin;
-	socklen_t 			len;
+	struct sockaddr_in	sin;
+	socklen_t			len;
 	char				*addr;
 	char				msg[64];
 
@@ -45,11 +46,11 @@ int	handle_pasv(t_ftp_server *serv, char *cmd)
 		close_reset(&serv->dtp.sock);
 	len = sizeof(sin);
 	if (getsockname(serv->dtp.sock, (struct sockaddr *)&sin, &len) == -1)
-		ftp_send(serv->pi.cs, FTP_MSG_KO_ODATA);
+		ftp_send(serv->pi.cs, FTP_M_KO_ODATA);
 	addr = ft_overwrite(ft_getip(), '.', ',', -1);
 	if (!addr)
-		ftp_send(serv->pi.cs, FTP_MSG_KO_ODATA);
+		ftp_send(serv->pi.cs, FTP_M_KO_ODATA);
 	ftp_serv_concate_ip_port(msg, addr, ntohs(sin.sin_port));
 	ftp_send(serv->pi.cs, msg);
-	return(0);
+	return (0);
 }

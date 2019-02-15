@@ -6,7 +6,7 @@
 #    By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/05 12:29:27 by gpouyat           #+#    #+#              #
-#    Updated: 2019/02/14 17:15:36 by gpouyat          ###   ########.fr        #
+#    Updated: 2019/02/15 15:24:32 by gpouyat          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ C_R = \033[1;31m
 SRCS_SERVER			+= /server/main.c /server/handle.c /server/handle_ls.c\
 						/server/handle_user.c /server/handle_syst.c /server/handle_pwd.c \
 						/server/connections.c /server/handle_pasv.c /server/handle_cwd.c \
-						/server/user_right.c /server/mouv.c
+						/server/user_right.c /server/mouv.c /server/handle_quit.c
 
 SRCS_CLIENT			+= /client/main.c
 

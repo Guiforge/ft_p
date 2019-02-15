@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 18:20:35 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/15 14:35:44 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/15 15:42:50 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,21 +37,13 @@ static void			reset_user(t_ftp_server *serv)
 	serv->user_log.admin = False;
 }
 
-t_bool ftp_serv_is_log(t_ftp_server *serv)
-{
-	if(serv && ft_strlen(serv->user_log.user))
-		return (True);
-	return (False);
-}
-
 int					handle_user(t_ftp_server *serv, char *cmd)
 {
-	size_t	i;
-	size_t	len_tmp;
-	size_t	len_user;
+	size_t			i;
+	size_t			len_tmp;
+	size_t			len_user;
 
 	i = 0;
-	log_debug("user = (%s)", cmd);
 	len_user = ft_strlen(cmd);
 	reset_user(serv);
 	while (g_users[i].user)
@@ -65,13 +57,13 @@ int					handle_user(t_ftp_server *serv, char *cmd)
 		}
 		i++;
 	}
-	ftp_send(serv->pi.cs, FTP_MSG_NEED_PASS);
+	ftp_send(serv->pi.cs, FTP_M_NEED_PASS);
 	return (0);
 }
 
-static			t_bool static_init_user(t_ftp_server *serv)
+static t_bool		static_init_user(t_ftp_server *serv)
 {
-	char home[PATH_MAX + 1];
+	char			home[PATH_MAX + 1];
 
 	if (serv->user_log.admin)
 		return (True);
@@ -79,34 +71,35 @@ static			t_bool static_init_user(t_ftp_server *serv)
 	return (ftp_serv_mv(serv, home));
 }
 
+static int			static_handle_pass_err(t_ftp_server *serv)
+{
+	sleep(3);
+	reset_user(serv);
+	ftp_send(serv->pi.cs, FTP_M_KO_LOG);
+	return (-1);
+}
+
 int					handle_pass(t_ftp_server *serv, char *cmd)
 {
-	size_t	i;
-	size_t	len;
+	size_t			i;
+	size_t			len;
 
 	i = 0;
 	if (!g_user)
-	{
-		sleep(3);
-		reset_user(serv);
-		ftp_send(serv->pi.cs, FTP_MSG_KO_LOG);
-		return (-1);
-	}
+		return (static_handle_pass_err(serv));
 	len = ft_strlen(g_user->pass);
 	if (len == ft_strlen(cmd) && !ft_strncmp(g_user->pass, cmd, len))
 	{
 		serv->user_log = *g_user;
 		if (static_init_user(serv))
-			ftp_send(serv->pi.cs, FTP_MSG_OK_LOG);
+			ftp_send(serv->pi.cs, FTP_M_OK_LOG);
 		else
 		{
 			log_error("Can't mouv into of user: %s", serv->user_log.user);
 			reset_user(serv);
-			ftp_send(serv->pi.cs, FTP_MSG_KO_LOG);
+			ftp_send(serv->pi.cs, FTP_M_KO_LOG);
 		}
 		return (0);
 	}
-	sleep(3);
-	ftp_send(serv->pi.cs, FTP_MSG_KO_LOG);
-	return (-1);
+	return (static_handle_pass_err(serv));
 }

@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 17:47:04 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/11 15:35:22 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/15 15:14:13 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static char *g_tab_log[] = {
 	"File system"
 };
 
-static void static_ftp_send_log(int sock, char *msg)
+static void	static_ftp_send_log(int sock, char *msg)
 {
 	void	(*inter_log)(const char *fmt, ...);
 	size_t	index;
@@ -37,25 +37,22 @@ static void static_ftp_send_log(int sock, char *msg)
 		inter_log = &log_warn;
 	else
 		inter_log = &log_error;
-
 	index = msg[1] - '0';
 	if (index <= 5)
 		inter_log(FTP_LOG_SEND_FMT, sock, g_tab_log[index], msg);
 	else
 		log_fatal("message not in Norme (%s)", msg);
-	
 }
 
-void ftp_send(int sock, char *msg)
+void		ftp_send(int sock, char *msg)
 {
 	int		ret;
 	size_t	len;
-	
+
 	len = ft_strlen(msg);
 	ret = send(sock, msg, len, 0);
 	if (ret == -1)
 		log_error("send [%s] fail", msg);
 	else
-		static_ftp_send_log(sock, msg);		
-	
+		static_ftp_send_log(sock, msg);
 }

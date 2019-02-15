@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 18:04:32 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/14 17:32:40 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/15 15:12:15 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ftp_cr_end(char *buffer, size_t len)
 	size_t	j;
 
 	if (!buffer)
-		return(NULL);
+		return (NULL);
 	new = ft_strnew(len + ft_strcount(buffer, '\n'));
 	if (!new)
 		exit(over("Malloc Error !!", EXIT_FAILURE));
