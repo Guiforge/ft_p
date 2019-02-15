@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 17:03:24 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/15 15:42:50 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/15 18:15:58 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static t_ftp_cmd	g_hands[] = {
 	{"CWD", (int (*)(void *, char *))&handle_cwd, True},
+	{"RETR", (int (*)(void *, char *))&handle_get, True},
 	{"QUIT", (int (*)(void *, char *))&handle_quit, False},
 	{"PASV", (int (*)(void *, char *))&handle_pasv, True},
 	{"PWD", (int (*)(void *, char *))&handle_pwd, True},

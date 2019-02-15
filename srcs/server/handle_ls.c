@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 17:27:02 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/15 15:42:50 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/15 17:36:01 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,7 @@ static void		ftp_send_cmd(t_ftp_server *serv, int fdin)
 		free(msg);
 	}
 	send(serv->dtp.cs, "\r\n", 2, 0);
-	close_reset(&serv->dtp.cs);
-	close_reset(&serv->dtp.sock);
-	ftp_send(serv->pi.cs, FTP_M_CLOSE_ODATA);
+	ftp_serv_close_dtp(serv);
 }
 
 static int		ftp_run_ls_father(t_ftp_server *sev, int *pipes, pid_t pid)
@@ -97,21 +95,7 @@ static int		ftp_run_ls(t_ftp_server *serv, char *cmd)
 
 int				handle_ls(t_ftp_server *serv, char *cmd)
 {
-	unsigned int		cslen;
-	struct sockaddr_in	csin;
-
-	if (serv->dtp.sock == -1)
-	{
-		ftp_send(serv->pi.cs, FTP_M_ABRT);
-		return (-1);
-	}
-	cslen = sizeof(csin);
-	serv->dtp.cs = accept(serv->dtp.sock, (struct sockaddr *)&csin, &cslen);
-	if (serv->dtp.cs == -1)
-	{
-		ftp_send(serv->pi.sock, FTP_M_KO_ODATA);
-		close_reset(&serv->dtp.sock);
-	}
-	ftp_run_ls(serv, cmd);
+	if (ftp_serv_accept_dtpcs(serv) != -1)
+		log_debug("code return ls : %d", ftp_run_ls(serv, cmd));
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 11:50:15 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/15 15:42:50 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/15 17:36:01 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,31 @@ int		ftp_serv_new_sock_bind(int port)
 	if ((bind(sock, (const struct sockaddr *)&sin, sizeof(sin))) == -1)
 		close_reset(&sock);
 	return (sock);
+}
+
+void	ftp_serv_close_dtp(t_ftp_server *serv)
+{
+	close_reset(&serv->dtp.cs);
+	close_reset(&serv->dtp.sock);
+	ftp_send(serv->pi.cs, FTP_M_CLOSE_ODATA);
+}
+
+int		ftp_serv_accept_dtpcs(t_ftp_server *serv)
+{
+	unsigned int		cslen;
+	struct sockaddr_in	csin;
+
+	if (serv->dtp.sock == -1)
+	{
+		ftp_send(serv->pi.cs, FTP_M_ABRT);
+		return (-1);
+	}
+	cslen = sizeof(csin);
+	serv->dtp.cs = accept(serv->dtp.sock, (struct sockaddr *)&csin, &cslen);
+	if (serv->dtp.cs == -1)
+	{
+		ftp_send(serv->pi.cs, FTP_M_KO_ODATA);
+		close_reset(&serv->dtp.sock);
+	}
+	return (serv->pi.cs);
 }

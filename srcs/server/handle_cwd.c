@@ -6,12 +6,11 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 14:31:24 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/15 15:42:50 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/15 18:20:35 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/server.h"
-#include <fcntl.h>
 
 static int			static_handle_cwd_error(int sock, char *msg)
 {

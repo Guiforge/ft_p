@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 18:03:27 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/15 15:45:30 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/15 16:21:04 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@
 # define FTP_C_CLOSE_ODATA "226"
 # define FTP_C_REQU_ABRT "551"
 # define FTP_C_REQUF_OK "250"
+# define FTP_C_ODATAY "125"
 
+# define FTP_M_ODATAY FTP_C_ODATAY " Data connection already open\r\n";
 # define FTP_M_REQUF_OK FTP_C_REQUF_OK " Completed.\r\n"
 # define FTP_M_CLOSE_ODATA FTP_C_CLOSE_ODATA " Closing data connection.\r\n"
 # define FTP_M_OK_ODATA FTP_C_OK_ODATA " File status okay\r\n"
@@ -56,7 +58,6 @@
 /*
          110 Restart marker reply. In this case, the text is exact and not left to the particular implementation; it must read:      MARK yyyy = mmmm Where yyyy is User-process data stream marker, and mmmm server's equivalent marker (note the spaces between markers and "=").
          120 Service ready in nnn minutes.
-         125 Data connection already open; transfer starting.
          200 Command okay.
          202 Command not implemented, superfluous at this site.
          211 System status, or system help reply.
