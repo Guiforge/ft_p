@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 17:27:02 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/13 10:31:15 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/15 14:46:49 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void ftp_send_cmd(t_ftp_server *serv, int fdin)
 		send(serv->dtp.cs, msg, ft_strlen(msg), 0);
 		free(msg);
 	}
-	send(serv->dtp.cs, "\r", 1, 0);
+	send(serv->dtp.cs, "\r\n", 2, 0);
 	close_reset(&serv->dtp.cs);
 	close_reset(&serv->dtp.sock);
 	ftp_send(serv->pi.cs, FTP_MSG_CLOSE_ODATA);
@@ -50,23 +50,28 @@ static int ftp_run_ls_father(t_ftp_server *sev, int *pipes, pid_t pid)
 	return (WEXITSTATUS(status));
 }
 
-static void ftp_run_ls_child(int *pipes, char *cmd)
+static void ftp_run_ls_child(t_ftp_server *serv, int *pipes, char *cmd)
 {
-	char **argv;
+	char *path;
 
 	close_reset(&pipes[0]);
-	if (!(argv = ft_strsplit(cmd, ' ')) && *argv)
+	if (cmd)
+		path = ft_secu_add(ft_exp_path(cmd, serv->pwd), M_LVL_FUNCT);
+	else
+		path = ft_secu_add(ft_exp_path(".", serv->pwd), M_LVL_FUNCT);
+	
+	if (ftp_serv_check(serv, path) == False)
 	{
-		log_fatal("Error malloc split");
+		ftp_send(serv->dtp.cs, FTP_MSG_F_NOT_A);
 		exit(EXIT_FAILURE);
-	} 
-	ft_strcpy(argv[0], "ls");
+	}
 	if (dup2(pipes[1], 2) !=-1 && dup2(pipes[1], 1) != -1)
-		execv("/bin/ls", argv);
+		execl("/bin/ls", "ls", "-la", path, NULL);
 	else
 		log_fatal("Dup2 Fail");
-	ft_strdblfree(argv);
+	perror("exec:");
 	log_fatal("Execv fail !!");
+	ft_secu_free(path);
 	exit(EXIT_FAILURE);
 }
 
@@ -87,7 +92,7 @@ static int ftp_run_ls(t_ftp_server *serv, char *cmd)
 	else if (pid)
 		return (ftp_run_ls_father(serv, pipes, pid));
 	else
-		ftp_run_ls_child(pipes, cmd);
+		ftp_run_ls_child(serv, pipes, cmd);
 	return (-1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 18:20:35 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/14 17:29:58 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/15 14:35:44 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,19 +47,18 @@ t_bool ftp_serv_is_log(t_ftp_server *serv)
 int					handle_user(t_ftp_server *serv, char *cmd)
 {
 	size_t	i;
-	char	*user_name;
 	size_t	len_tmp;
 	size_t	len_user;
 
 	i = 0;
-	user_name = &cmd[5];
-	len_user = ft_strlen(user_name);
+	log_debug("user = (%s)", cmd);
+	len_user = ft_strlen(cmd);
 	reset_user(serv);
 	while (g_users[i].user)
 	{
 		len_tmp = ft_strlen(g_users[i].user);
 		if (len_tmp == len_user && !ft_strncmp(g_users[i].user,\
-														user_name, len_tmp))
+														cmd, len_tmp))
 		{
 			g_user = &g_users[i];
 			break ;
@@ -84,19 +83,17 @@ int					handle_pass(t_ftp_server *serv, char *cmd)
 {
 	size_t	i;
 	size_t	len;
-	char	*pass;
 
 	i = 0;
-	if (!g_user || !(cmd && cmd[0] && cmd[1] && cmd[2] && cmd[3] && cmd[4]))
+	if (!g_user)
 	{
-		reset_user(serv);
 		sleep(3);
+		reset_user(serv);
 		ftp_send(serv->pi.cs, FTP_MSG_KO_LOG);
 		return (-1);
 	}
-	pass = &cmd[5];
 	len = ft_strlen(g_user->pass);
-	if (len == ft_strlen(pass) && !ft_strncmp(g_user->pass, pass, len))
+	if (len == ft_strlen(cmd) && !ft_strncmp(g_user->pass, cmd, len))
 	{
 		serv->user_log = *g_user;
 		if (static_init_user(serv))

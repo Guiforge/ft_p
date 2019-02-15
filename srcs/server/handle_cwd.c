@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 14:31:24 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/14 17:25:32 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/15 14:30:52 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,7 @@ int					handle_cwd(t_ftp_server *serv, char *cmd)
 	char		home[PATH_MAX + 1];
 
 	new = NULL;
-	if (cmd && cmd[0] && cmd[1] && cmd[2] && cmd[3])
-		new = ft_exp_path(&cmd[4], serv->pwd);
+	new = ft_secu_add(ft_exp_path(cmd, serv->pwd), M_LVL_FUNCT);
 	if (!new)
 		return (static_handle_cwd_error(serv->pi.cs, FTP_MSG_REQU_ABRT));
 	ftp_serv_get_home(serv, home);
@@ -56,5 +55,6 @@ int					handle_cwd(t_ftp_server *serv, char *cmd)
 		return (static_handle_cwd_error(serv->pi.cs, FTP_MSG_F_NOT_A));
 	ft_strcpy(serv->pwd, new);
 	ftp_send(serv->pi.cs, FTP_MSG_REQUF_OK);
+	ft_secu_free(new);
 	return (0);
 }

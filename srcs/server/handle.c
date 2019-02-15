@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 17:03:24 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/14 14:44:22 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/15 14:38:51 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,11 @@
 
 /*
 .
-cd : change le répertoire courant du serveur
-•
 get _file_ : récupère le fichier _file_ du serveur vers le client
 •
 put _file_ : envoi le fichier _file_ du client vers le serveur
 */
-
+// RETR
 static void	handle_quit(t_ftp_server *context, char *cmd);
 
 static t_ftp_cmd	g_hands[] = {
@@ -49,6 +47,7 @@ static void	handle_quit(t_ftp_server *serv, char *cmd)
 static void	exec_handler(t_ftp_server *serv, char *cmd)
 {
 	size_t	i;
+	char	*param;
 
 	i = 0;
 	//TODO: Void mode carriage return !!
@@ -63,8 +62,11 @@ static void	exec_handler(t_ftp_server *serv, char *cmd)
 		i++;
 	if(g_hands[i].cmd)
 	{
+		param = ft_strchr(cmd, ' ');
+		if (param)
+			param++;
 		if (!g_hands[i].need_log || ftp_serv_is_log(serv))
-			g_hands[i].handler(serv, cmd);
+			g_hands[i].handler(serv, param);
 		else
 			ftp_send(serv->pi.cs, FTP_MSG_NEED_ACC);
 	}
