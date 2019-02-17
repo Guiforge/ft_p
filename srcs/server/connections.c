@@ -45,7 +45,7 @@ int		ftp_serv_new_sock_bind(int port)
 	sock = socket(PF_INET, SOCK_STREAM, proto->p_proto);
 	sin.sin_family = AF_INET;
 	sin.sin_port = htons(port);
-	sin.sin_len = sizeof(sin);
+	// Mac oS ?sin.sin_len = sizeof(sin);
 	sin.sin_addr.s_addr = htonl(INADDR_ANY);
 	if ((bind(sock, (const struct sockaddr *)&sin, sizeof(sin))) == -1)
 		close_reset(&sock);

@@ -44,6 +44,12 @@ NAME_CLIENT		= client
 CC				= cc
 CFLAGS			= -Wall -Wextra -Werror
 
+UNAME_S := $(shell uname -s)
+
+ifeq ($(UNAME_S), Linux)
+	CFLAGS		+= -fPIC
+endif
+
 ifeq ($(DEBUG), yes)
 	CFLAGS		+= -D DEBUG -ggdb
 endif

@@ -68,6 +68,9 @@ void		ftp_handle_cmd(t_ftp_server *serv)
 	int				ret;
 
 	while ((ret = get_next_line(serv->pi.cs, &line)) && ret != -1)
+	{
 		exec_handler(serv, line);
+		free(line);
+	}
 	free(line);
 }

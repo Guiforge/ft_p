@@ -17,6 +17,10 @@
 # include "./proto.h"
 # include "./tools.h"
 # include <fcntl.h>
+# include <sys/types.h>
+# include <sys/time.h>
+# include <sys/resource.h>
+# include <sys/wait.h>
 
 # define FTP_PRGM "server ftp"
 # define FTP_PORT_LISTEN 42

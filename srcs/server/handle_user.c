@@ -81,10 +81,8 @@ static int			static_handle_pass_err(t_ftp_server *serv)
 
 int					handle_pass(t_ftp_server *serv, char *cmd)
 {
-	size_t			i;
 	size_t			len;
 
-	i = 0;
 	if (!g_user)
 		return (static_handle_pass_err(serv));
 	len = ft_strlen(g_user->pass);
