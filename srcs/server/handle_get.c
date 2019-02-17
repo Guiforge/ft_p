@@ -23,12 +23,14 @@ static void	send_file(t_ftp_server *serv, char *path)
 	while((len = read(fd, buffer, 1047)) && len != -1)
 	{
 		buffer[len - 1] = 0;
-		msg = ftp_cr_end(buffer, len);
+		// msg = ftp_cr_end(buffer, len);
 		// TODO: CSR MODE ASCII ?
 		send(serv->dtp.cs, msg, ft_strlen(msg), 0);
 		free(msg);
 	}
-	send(serv->dtp.cs, "\r\n", 2, 0);
+	//TODO : new line check read 
+	// char eof = EOF;
+	// send(serv->dtp.cs, &eof, 1, 0);
 }
 
 int		handle_get(t_ftp_server *serv, char *cmd)
@@ -39,6 +41,11 @@ int		handle_get(t_ftp_server *serv, char *cmd)
 		return (-1);
 	}
 	ftp_serv_accept_dtpcs(serv);
+	// ft_str_arrjoin((char *[])
+					//{"Opening BINARY mode data connection for ", args[1], " (",
+//ft_itoa(ftp_srv_fs_size_file(fd)), " bytes).", NULL});
+
+	ftp_send(serv->pi.cs, FTP_M_OK_ODATA);
 	send_file(serv, cmd);
 	ftp_serv_close_dtp(serv);
 	return (EXIT_SUCCESS);
