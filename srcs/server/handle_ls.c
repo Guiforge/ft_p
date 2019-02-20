@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_ls.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: guiforge <guiforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 17:27:02 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/15 17:36:01 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/20 10:39:04 by guiforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 static void		ftp_send_cmd(t_ftp_server *serv, int fdin)
 {
 	char	buffer[2048];
-	char	*msg;
 	ssize_t	len;
 
 	ft_bzero(buffer, 2048);
@@ -23,12 +22,9 @@ static void		ftp_send_cmd(t_ftp_server *serv, int fdin)
 	while ((len = read(fdin, buffer, 2047)) && len != -1)
 	{
 		buffer[len - 1] = 0;
-		msg = ftp_cr_end(buffer, len);
-		// TODO: CSR MODE ASCII ?
-		send(serv->dtp.cs, msg, ft_strlen(msg), 0);
-		free(msg);
+		ftp_serv_send_data(serv, buffer, len);
 	}
-	send(serv->dtp.cs, "\r\n", 2, 0);
+	ftp_serv_send_data(serv, "\n", 1);
 	ftp_serv_close_dtp(serv);
 }
 

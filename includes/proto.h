@@ -3,16 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   proto.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: guiforge <guiforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 18:03:27 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/15 16:21:04 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/19 13:57:23 by guiforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PROTO_H
 # define PROTO_H
 # include "../libft/includes/intern/t_bool.h"
+
+# ifdef __APPLE__
+#  define FTP_OS "MACOS"
+# else
+#  define FTP_OS "Linux"
+# endif
 
 # define FTP_C_OK "200"
 # define FTP_C_CLOSE "426"
@@ -33,8 +39,11 @@
 # define FTP_C_REQU_ABRT "551"
 # define FTP_C_REQUF_OK "250"
 # define FTP_C_ODATAY "125"
+# define FTP_C_SYTXERR "501"
 
-# define FTP_M_ODATAY FTP_C_ODATAY " Data connection already open\r\n";
+# define FTP_M_SYTXERR FTP_C_SYTXERR " Syntax error in parameters\r\n"
+# define FTP_M_OK FTP_C_OK " Ok\r\n"
+# define FTP_M_ODATAY FTP_C_ODATAY " Data connection already open\r\n"
 # define FTP_M_REQUF_OK FTP_C_REQUF_OK " Completed.\r\n"
 # define FTP_M_CLOSE_ODATA FTP_C_CLOSE_ODATA " Closing data connection.\r\n"
 # define FTP_M_OK_ODATA FTP_C_OK_ODATA " File status okay\r\n"
@@ -43,7 +52,7 @@
 # define FTP_M_F_NOT_F FTP_C_F_NOT_F " File not found.\r\n"
 # define FTP_M_F_NOT_A FTP_C_F_NOT_F " File unavailable, not access.\r\n"
 # define FTP_M_F_NOT_D FTP_C_F_NOT_F " File unavailable, not directory.\r\n"
-# define FTP_M_SYST FTP_C_SYST " MACOS of 42!! \r\n"
+# define FTP_M_SYST FTP_C_SYST " " FTP_OS " of 42!! \r\n"
 # define FTP_M_TOO_LONG FTP_C_TOO_LONG " Command line too long.\r\n"
 # define FTP_M_WELCOM FTP_C_OK " Welcome on this server by gpouyat!!\r\n"
 # define FTP_M_ABRT FTP_C_CLOSE " Connection closed\r\n"
@@ -72,7 +81,7 @@
          450 Requested file action not taken. File unavailable (e.g., file busy).
          451 Requested action aborted. Local error in processing.
          452 Requested action not taken. Insufficient storage space in system.
-         501 Syntax error in parameters or arguments.
+
          503 Bad sequence of commands.
          504 Command not implemented for that parameter.
          532 Need account for storing files.

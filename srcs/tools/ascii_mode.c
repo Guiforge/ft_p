@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ascii_mode.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: guiforge <guiforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 18:04:32 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/15 15:12:15 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/20 21:05:45 by guiforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,17 @@ char	*ftp_cr_end(char *buffer, size_t len)
 		i++;
 	}
 	return (new);
+}
+
+char	*ftp_newline_end(char *buffer)
+{
+	char *cpy;
+
+	cpy = buffer;
+	if (!buffer)
+		return (NULL);
+	while((buffer = ft_strstr(buffer, "\r\n")))
+		ft_strcpy(buffer, buffer + 1);
+	log_debug("RET/ %s", cpy);
+	return(cpy);
 }

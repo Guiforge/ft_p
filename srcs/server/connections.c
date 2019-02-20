@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   connections.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: guiforge <guiforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 11:50:15 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/15 17:36:01 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/20 21:12:03 by guiforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ftp_serv_new_connect(t_ftp_server *serv)
 		return ((void)ftp_over_cconnect(serv->pi.cs, "Error fork", 0));
 	else if (pid > 0)
 	{
-		close_reset(&(serv->pi.cs));
+		// close_reset(&(serv->pi.cs));
 		return ;
 	}
 	close_reset(&(serv->pi.sock));

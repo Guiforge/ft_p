@@ -3,16 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   handle.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: guiforge <guiforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 17:03:24 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/15 18:15:58 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/20 20:58:43 by guiforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/server.h"
 
+// STOR toto.txt
 static t_ftp_cmd	g_hands[] = {
+	{"TYPE", (int (*)(void *, char *))&handle_type, True},
+	{"STOR", (int (*)(void *, char *))&handle_stor, True},
 	{"CWD", (int (*)(void *, char *))&handle_cwd, True},
 	{"RETR", (int (*)(void *, char *))&handle_get, True},
 	{"QUIT", (int (*)(void *, char *))&handle_quit, False},
@@ -28,8 +31,7 @@ static t_ftp_cmd	g_hands[] = {
 
 static void	check_cmd(t_ftp_server *serv, char *cmd)
 {
-	//TODO: Void mode carriage return !!
-	ft_overwrite(cmd, 13, '\0', -1);
+	ft_overwrite(cmd, '\r', '\0', -1);
 	log_debug("received: %s", cmd);
 	if (ft_strlen_max(cmd, FTP_MAX_LEN_CMD + 1) >= FTP_MAX_LEN_CMD)
 	{

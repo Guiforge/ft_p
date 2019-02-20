@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   send.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: guiforge <guiforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 17:47:04 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/15 15:14:13 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/20 11:51:54 by guiforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,19 @@ void		ftp_send(int sock, char *msg)
 		log_error("send [%s] fail", msg);
 	else
 		static_ftp_send_log(sock, msg);
+}
+
+void		ftp_send_msg(int sock, char *code, char *msg)
+{
+	char	*final_msg;
+
+	final_msg = ft_strnew(ft_strlen(msg) + 3 + 3);
+	if (!final_msg)
+		exit(over("ERROR MALLOC", EXIT_FAILURE));
+	ft_strcat(final_msg, code);
+	ft_strcat(final_msg, " ");
+	ft_strcat(final_msg, msg);
+	ft_strcat(final_msg, "\r\n");
+	ftp_send(sock, final_msg);
+	free(final_msg);
 }

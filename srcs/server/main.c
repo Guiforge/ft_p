@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: guiforge <guiforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 17:34:00 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/15 15:37:50 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/20 10:12:09 by guiforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,11 @@ t_ftp_server			ftp_init(void)
 		exit(EXIT_FAILURE);
 	}
 	ft_strcpy(context.base, context.pwd);
+	context.ascii = True;
 	return (context);
 }
 
+//TODO: multiple connection
 int						main(int ac, char **av)
 {
 	int					port;

@@ -1,35 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   send.c                                             :+:      :+:    :+:   */
+/*   handle_type.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: guiforge <guiforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/17 22:25:04 by guiforge          #+#    #+#             */
-/*   Updated: 2019/02/20 11:33:13 by guiforge         ###   ########.fr       */
+/*   Created: 2019/02/18 22:24:57 by guiforge          #+#    #+#             */
+/*   Updated: 2019/02/18 22:39:28 by guiforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/server.h"
 
-ssize_t     ftp_serv_send_data(t_ftp_server *serv, char *buffer, size_t len_buffer)
+int		handle_type(t_ftp_server *serv, char *cmd)
 {
-	char	*msg;
-	ssize_t	ret;
-
-	if (serv->ascii)
-	{
-		msg = ftp_cr_end(buffer, len_buffer);
-		ret = send(serv->dtp.cs, msg, ft_strlen(msg), 0);
-		free(msg);
-	}
+	if (cmd && *cmd == 'A')
+		serv->ascii = True;
+	else if (cmd && *cmd == 'I')
+		serv->ascii = False;
 	else
 	{
-		if (len_buffer)
-			ret = send(serv->dtp.cs, buffer, len_buffer, 0);
-		else
-			ret = send(serv->dtp.cs, buffer, ft_strlen(buffer), 0);
-		
+		ftp_send(serv->pi.cs, FTP_M_SYTXERR);
+		return (EXIT_FAILURE);
 	}
-	return (ret);
+	ftp_send(serv->pi.cs, FTP_M_OK);
+	return (EXIT_SUCCESS);
 }

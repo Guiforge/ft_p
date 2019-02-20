@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: guiforge <guiforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 17:55:10 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/15 15:49:35 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/20 20:55:49 by guiforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,7 @@ int				ftp_err_close_exit(int fd, enum e_logger_lvl lvl, \
 int				ftp_over_cconnect(int cs, char *msg, int ret);
 char			*ftp_get_ip(void);
 char			*ftp_cr_end(char *buffer, size_t len);
+char			*ftp_newline_end(char *buffer);
+void			ftp_send_msg(int sock, char *code, char *msg);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_pasv.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: guiforge <guiforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 15:47:16 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/15 16:22:59 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/20 10:35:13 by guiforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static void	ftp_serv_concate_ip_port(char buffer[64], char *addr,\
 	ft_secu_free_lvl(M_LVL_FUNCT);
 }
 
+// TODO: if exisit close before 
 int			handle_pasv(t_ftp_server *serv, char *cmd)
 {
 	struct sockaddr_in	sin;

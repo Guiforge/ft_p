@@ -6,7 +6,7 @@
 /*   By: guiforge <guiforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 17:36:14 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/17 22:30:43 by guiforge         ###   ########.fr       */
+/*   Updated: 2019/02/20 20:52:44 by guiforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ t_bool				ftp_serv_is_log(t_ftp_server *serv);
 int					ftp_serv_new_sock_bind(int port);
 void				ftp_serv_new_connect(t_ftp_server *serv);
 void				ftp_handle_cmd(t_ftp_server *serv);
+int					handle_type(t_ftp_server *serv, char *cmd);
 int					handle_ls(t_ftp_server *serv, char *cmd);
 int					handle_user(t_ftp_server *serv, char *cmd);
 int					handle_pass(t_ftp_server *serv, char *cmd);
@@ -60,6 +61,7 @@ int					handle_pasv(t_ftp_server *serv, char *cmd);
 int					handle_cwd(t_ftp_server *serv, char *cmd);
 int					handle_quit(t_ftp_server *serv, char *cmd);
 int					handle_get(t_ftp_server *serv, char *cmd);
+int					handle_stor(t_ftp_server *serv, char *cmd);
 void				ftp_serv_get_home(t_ftp_server *serv,\
 													char home[PATH_MAX + 1]);
 t_bool				ftp_serv_check(t_ftp_server *serv, char *path);
