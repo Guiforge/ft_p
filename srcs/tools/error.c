@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: guiforge <guiforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/31 10:30:34 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/15 15:42:50 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/21 16:29:16 by guiforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ int	ftp_err_close_exit(int fd, enum e_logger_lvl lvl, const char *fmt, ...)
 	exit(EXIT_FAILURE);
 }
 
-int	ftp_over_cconnect(int cs, char *msg, int ret)
+int	ftp_over_cconnect(int cs, char *msg, int ret, size_t id)
 {
 	over(msg, 0);
-	ftp_send(cs, FTP_M_ABRT);
+	ftp_send(cs, FTP_M_ABRT, id);
 	return (ret);
 }

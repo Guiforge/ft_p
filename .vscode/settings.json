@@ -5,7 +5,8 @@
 		"libft.h": "c",
 		"tools.h": "c",
 		"socket.h": "c",
-		"limits.h": "c"
+		"limits.h": "c",
+		"stdio.h": "c"
 	},
 	"C_Cpp.dimInactiveRegions": false
 }

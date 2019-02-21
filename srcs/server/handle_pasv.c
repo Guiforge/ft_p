@@ -6,7 +6,7 @@
 /*   By: guiforge <guiforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 15:47:16 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/20 10:35:13 by guiforge         ###   ########.fr       */
+/*   Updated: 2019/02/21 16:23:46 by guiforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,11 @@ int			handle_pasv(t_ftp_server *serv, char *cmd)
 		close_reset(&serv->dtp.sock);
 	len = sizeof(sin);
 	if (getsockname(serv->dtp.sock, (struct sockaddr *)&sin, &len) == -1)
-		ftp_send(serv->pi.cs, FTP_M_KO_ODATA);
+		ftp_serv_send(serv, FTP_M_KO_ODATA);
 	addr = ft_overwrite(ft_getip(), '.', ',', -1);
 	if (!addr)
-		ftp_send(serv->pi.cs, FTP_M_KO_ODATA);
+		ftp_serv_send(serv, FTP_M_KO_ODATA);
 	ftp_serv_concate_ip_port(msg, addr, ntohs(sin.sin_port));
-	ftp_send(serv->pi.cs, msg);
+	ftp_serv_send(serv, msg);
 	return (0);
 }

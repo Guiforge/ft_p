@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_user.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: guiforge <guiforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 18:20:35 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/15 15:42:50 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/21 16:23:46 by guiforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int					handle_user(t_ftp_server *serv, char *cmd)
 		}
 		i++;
 	}
-	ftp_send(serv->pi.cs, FTP_M_NEED_PASS);
+	ftp_serv_send(serv, FTP_M_NEED_PASS);
 	return (0);
 }
 
@@ -75,7 +75,7 @@ static int			static_handle_pass_err(t_ftp_server *serv)
 {
 	sleep(3);
 	reset_user(serv);
-	ftp_send(serv->pi.cs, FTP_M_KO_LOG);
+	ftp_serv_send(serv, FTP_M_KO_LOG);
 	return (-1);
 }
 
@@ -90,12 +90,12 @@ int					handle_pass(t_ftp_server *serv, char *cmd)
 	{
 		serv->user_log = *g_user;
 		if (static_init_user(serv))
-			ftp_send(serv->pi.cs, FTP_M_OK_LOG);
+			ftp_serv_send(serv, FTP_M_OK_LOG);
 		else
 		{
 			log_error("Can't mouv into of user: %s", serv->user_log.user);
 			reset_user(serv);
-			ftp_send(serv->pi.cs, FTP_M_KO_LOG);
+			ftp_serv_send(serv, FTP_M_KO_LOG);
 		}
 		return (0);
 	}

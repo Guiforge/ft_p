@@ -6,7 +6,7 @@
 /*   By: guiforge <guiforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 17:03:24 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/20 20:58:43 by guiforge         ###   ########.fr       */
+/*   Updated: 2019/02/21 16:23:46 by guiforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	check_cmd(t_ftp_server *serv, char *cmd)
 	log_debug("received: %s", cmd);
 	if (ft_strlen_max(cmd, FTP_MAX_LEN_CMD + 1) >= FTP_MAX_LEN_CMD)
 	{
-		ftp_send(serv->pi.cs, FTP_M_TOO_LONG);
+		ftp_serv_send(serv, FTP_M_TOO_LONG);
 		return ;
 	}
 }
@@ -58,10 +58,10 @@ static void	exec_handler(t_ftp_server *serv, char *cmd)
 		if (!g_hands[i].need_log || ftp_serv_is_log(serv))
 			g_hands[i].handler(serv, param);
 		else
-			ftp_send(serv->pi.cs, FTP_M_NEED_ACC);
+			ftp_serv_send(serv, FTP_M_NEED_ACC);
 	}
 	else
-		ftp_send(serv->pi.cs, FTP_M_CMD_NOT);
+		ftp_serv_send(serv, FTP_M_CMD_NOT);
 }
 
 void		ftp_handle_cmd(t_ftp_server *serv)

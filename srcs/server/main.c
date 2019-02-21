@@ -6,18 +6,23 @@
 /*   By: guiforge <guiforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 17:34:00 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/20 10:12:09 by guiforge         ###   ########.fr       */
+/*   Updated: 2019/02/21 16:17:49 by guiforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/server.h"
 
-int						create_server(int port)
+int						create_server(char *av_port)
 {
+	int					port;
 	int					sock;
 	struct protoent		*proto;
 	struct sockaddr_in	sin;
 
+	if (av_port)
+		port = ft_atoi(av_port);
+	else
+		port = 4242;
 	if (!(proto = getprotobyname("tcp")))
 		return (over_log(-1, LOG_LVL_ERROR, "getprotobyname(tcp)"));
 	sock = socket(PF_INET, SOCK_STREAM, proto->p_proto);
@@ -48,24 +53,23 @@ t_ftp_server			ftp_init(void)
 	return (context);
 }
 
-//TODO: multiple connection
 int						main(int ac, char **av)
 {
-	int					port;
 	t_ftp_server		serv;
 	unsigned int		cslen;
 	struct sockaddr_in	csin;
+	size_t				id;
 
+	(void)ac;
+	id = 0;
 	log_init(NULL, STDERR_FILENO);
 	serv = ftp_init();
-	// TODO: Protect !!
-				(void)ac;
-				port = atoi(av[1]);
-	serv.pi.sock = create_server(port);
+	serv.pi.sock = create_server(av[1]);
 	while (42)
 	{
 		cslen = sizeof(csin);
 		serv.pi.cs = accept(serv.pi.sock, (struct sockaddr *)&csin, &cslen);
+		serv.id = id++;
 		ftp_serv_new_connect(&serv);
 	}
 	close_reset(&(serv.pi.cs));

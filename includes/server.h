@@ -6,7 +6,7 @@
 /*   By: guiforge <guiforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 17:36:14 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/20 20:52:44 by guiforge         ###   ########.fr       */
+/*   Updated: 2019/02/21 23:03:33 by guiforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct		s_ftp_server {
 	t_ftp_connect	pi;
 	t_ftp_connect	dtp;
 	t_bool			ascii;
+	size_t			id;
 }					t_ftp_server;
 
 # define FTP_BACKLOG 42
@@ -49,7 +50,7 @@ int					ftp_serv_accept_dtpcs(t_ftp_server *serv);
 void				ftp_serv_close_dtp(t_ftp_server *serv);
 t_bool				ftp_serv_is_log(t_ftp_server *serv);
 int					ftp_serv_new_sock_bind(int port);
-void				ftp_serv_new_connect(t_ftp_server *serv);
+pid_t				ftp_serv_new_connect(t_ftp_server *serv);
 void				ftp_handle_cmd(t_ftp_server *serv);
 int					handle_type(t_ftp_server *serv, char *cmd);
 int					handle_ls(t_ftp_server *serv, char *cmd);
@@ -66,5 +67,7 @@ void				ftp_serv_get_home(t_ftp_server *serv,\
 													char home[PATH_MAX + 1]);
 t_bool				ftp_serv_check(t_ftp_server *serv, char *path);
 t_bool				ftp_serv_mv(t_ftp_server *serv, char *path);
+void				ftp_serv_send(t_ftp_server *serv, char *msg);
+void				ftp_serv_send_msg(t_ftp_server *serv, char *code, char *msg);
 
 #endif

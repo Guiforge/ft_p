@@ -6,7 +6,7 @@
 /*   By: guiforge <guiforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 17:27:02 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/20 10:39:04 by guiforge         ###   ########.fr       */
+/*   Updated: 2019/02/21 16:25:20 by guiforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void		ftp_send_cmd(t_ftp_server *serv, int fdin)
 	ssize_t	len;
 
 	ft_bzero(buffer, 2048);
-	ftp_send(serv->pi.cs, FTP_M_OK_ODATA);
+	ftp_serv_send(serv, FTP_M_OK_ODATA);
 	while ((len = read(fdin, buffer, 2047)) && len != -1)
 	{
 		buffer[len - 1] = 0;
@@ -55,7 +55,7 @@ static void		ftp_run_ls_child(t_ftp_server *serv, int *pipes, char *cmd)
 		path = ft_secu_add(ft_exp_path(".", serv->pwd), M_LVL_FUNCT);
 	if (ftp_serv_check(serv, path) == False)
 	{
-		ftp_send(serv->dtp.cs, FTP_M_F_NOT_A);
+		ftp_send(serv->dtp.cs, FTP_M_F_NOT_A, serv->id);
 		exit(EXIT_FAILURE);
 	}
 	if (dup2(pipes[1], 2) != -1 && dup2(pipes[1], 1) != -1)

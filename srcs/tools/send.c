@@ -6,7 +6,7 @@
 /*   By: guiforge <guiforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 17:47:04 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/20 11:51:54 by guiforge         ###   ########.fr       */
+/*   Updated: 2019/02/21 16:22:03 by guiforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static char *g_tab_log[] = {
 	"File system"
 };
 
-static void	static_ftp_send_log(int sock, char *msg)
+static void	static_ftp_send_log(size_t id, char *msg)
 {
 	void	(*inter_log)(const char *fmt, ...);
 	size_t	index;
@@ -39,12 +39,12 @@ static void	static_ftp_send_log(int sock, char *msg)
 		inter_log = &log_error;
 	index = msg[1] - '0';
 	if (index <= 5)
-		inter_log(FTP_LOG_SEND_FMT, sock, g_tab_log[index], msg);
+		inter_log(FTP_LOG_SEND_FMT, id, g_tab_log[index], msg);
 	else
 		log_fatal("message not in Norme (%s)", msg);
 }
 
-void		ftp_send(int sock, char *msg)
+void		ftp_send(int sock, char *msg, size_t id)
 {
 	int		ret;
 	size_t	len;
@@ -54,10 +54,10 @@ void		ftp_send(int sock, char *msg)
 	if (ret == -1)
 		log_error("send [%s] fail", msg);
 	else
-		static_ftp_send_log(sock, msg);
+		static_ftp_send_log(id, msg);
 }
 
-void		ftp_send_msg(int sock, char *code, char *msg)
+void		ftp_send_msg(int sock, char *code, char *msg, size_t id)
 {
 	char	*final_msg;
 
@@ -68,6 +68,6 @@ void		ftp_send_msg(int sock, char *code, char *msg)
 	ft_strcat(final_msg, " ");
 	ft_strcat(final_msg, msg);
 	ft_strcat(final_msg, "\r\n");
-	ftp_send(sock, final_msg);
+	ftp_send(sock, final_msg, id);
 	free(final_msg);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_syst.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: guiforge <guiforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 16:18:23 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/15 15:42:50 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/21 16:23:46 by guiforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,6 @@ int		handle_syst(t_ftp_server *serv, char *cmd)
 {
 	(void)cmd;
 	(void)serv;
-	ftp_send(serv->pi.cs, FTP_M_SYST);
+	ftp_serv_send(serv, FTP_M_SYST);
 	return (EXIT_SUCCESS);
 }

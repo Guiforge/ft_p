@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_quit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: guiforge <guiforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 15:18:10 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/15 15:42:50 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/21 16:23:46 by guiforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int		handle_quit(t_ftp_server *serv, char *cmd)
 {
 	(void)cmd;
-	ftp_send(serv->pi.cs, FTP_M_QUIT);
+	ftp_serv_send(serv, FTP_M_QUIT);
 	close_reset(&(serv->pi.cs));
 	close_reset(&(serv->dtp.cs));
 	close_reset(&(serv->dtp.sock));
