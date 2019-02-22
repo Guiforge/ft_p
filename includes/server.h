@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guiforge <guiforge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 17:36:14 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/21 23:03:33 by guiforge         ###   ########.fr       */
+/*   Updated: 2019/02/22 16:49:23 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@
 
 # define FTP_PRGM "server ftp"
 # define FTP_PORT_LISTEN 42
-
-# define FTP_MAX_LEN_CMD 256
 
 typedef struct		s_ftp_user {
 	char			*user;

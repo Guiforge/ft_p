@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guiforge <guiforge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 17:03:24 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/21 16:23:46 by guiforge         ###   ########.fr       */
+/*   Updated: 2019/02/22 16:12:53 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void		ftp_handle_cmd(t_ftp_server *serv)
 	while ((ret = get_next_line(serv->pi.cs, &line)) && ret != -1)
 	{
 		exec_handler(serv, line);
-		free(line);
+		ft_memdel((void **)&line);
 	}
-	free(line);
+	ft_memdel((void **)&line);
 }

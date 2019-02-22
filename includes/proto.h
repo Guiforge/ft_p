@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   proto.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guiforge <guiforge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 18:03:27 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/19 13:57:23 by guiforge         ###   ########.fr       */
+/*   Updated: 2019/02/22 16:54:25 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,7 @@ typedef struct	s_ftp_cmd
 	int		(*handler)(void *contex, char *cmd);
 	t_bool	need_log;
 }				t_ftp_cmd;
+
+# define FTP_MAX_LEN_CMD 2
+
 #endif
