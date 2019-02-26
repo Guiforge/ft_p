@@ -6,7 +6,7 @@
 #    By: guiforge <guiforge@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/05 12:29:27 by gpouyat           #+#    #+#              #
-#    Updated: 2019/02/20 20:53:11 by guiforge         ###   ########.fr        #
+#    Updated: 2019/02/26 19:52:18 by guiforge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,9 +28,10 @@ SRCS_SERVER			+= /server/main.c /server/handle.c /server/handle_ls.c\
 						/server/handle_get.c /server/handle_type.c /server/send.c \
 						/server/handle_stor.c
 
-SRCS_CLIENT			+= /client/main.c
+SRCS_CLIENT			+= /client/main.c /client/handle_syst.c /client/handle.c /client/handle_pwd.c \
+						/client/handle_debug.c /client/handle_user.c /client/build_msg.c /client/handle_pass.c
 
-SRCS_TOOLS			+= /tools/send.c /tools/error.c /tools/ascii_mode.c
+SRCS_TOOLS			+= /tools/send-recv.c /tools/error.c /tools/ascii_mode.c
 
 SRCS = $(SRCS_SERVER) $(SRCS_CLIENT) $(SRCS_TOOLS)
 SRC_SUBDIR = client server tools

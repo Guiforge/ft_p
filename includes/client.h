@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: guiforge <guiforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 16:17:46 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/25 17:26:55 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/02/26 19:51:48 by guiforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,13 @@ typedef struct		s_ftp_client {
 	// t_ftp_connect	dtp;
 	t_bool			ascii;
 }					t_ftp_client;
+
+int		handle_syst(t_ftp_client *c, char *cmd);
+int		handle_cmd(t_ftp_client *c, char *cmd);
+int		handle_pwd(t_ftp_client *c, char *cmd);
+int		handle_debug(t_ftp_client *c, char *cmd);
+int		handle_user(t_ftp_client *c, char *cmd);
+int		handle_pass(t_ftp_client *c, char *cmd);
+char	*build_msg(char *cmd, char *arg, size_t *len);
 
 #endif
