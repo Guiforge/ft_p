@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guiforge <guiforge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 11:39:57 by guiforge          #+#    #+#             */
-/*   Updated: 2019/02/26 19:49:27 by guiforge         ###   ########.fr       */
+/*   Updated: 2019/03/01 17:41:57 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,15 @@
 
 static t_ftp_cmd	g_hands[] = {
 	// {"TYPE", (int (*)(void *, char *))&handle_type, True},
-	// {"STOR", (int (*)(void *, char *))&handle_stor, True},
-	// {"CWD", (int (*)(void *, char *))&handle_cwd, True},
-	// {"RETR", (int (*)(void *, char *))&handle_get, True},
-	// {"QUIT", (int (*)(void *, char *))&handle_quit, False},
-	// {"PASV", (int (*)(void *, char *))&handle_pasv, True},
+	{"STOR", (int (*)(void *, char *))&handle_stor, True},
+	{"CWD", (int (*)(void *, char *))&handle_cwd, True},
+	{"CD", (int (*)(void *, char *))&handle_cwd, True},
+	{"RETR", (int (*)(void *, char *))&handle_get, True},
+	{"GET", (int (*)(void *, char *))&handle_get, True},
+	{"QUIT", (int (*)(void *, char *))&handle_quit, False},
 	{"PWD", (int (*)(void *, char *))&handle_pwd, True},
-	// {"LS", (int (*)(void *, char *))&handle_ls, True},
-	// {"LIST", (int (*)(void *, char *))&handle_ls, True},
+	{"LS", (int (*)(void *, char *))&handle_ls, True},
+	{"LIST", (int (*)(void *, char *))&handle_ls, True},
 	{"SYST", (int (*)(void *, char *))&handle_syst, True},
 	{"USER", (int (*)(void *, char *))&handle_user, False},
 	{"DEBUG", (int (*)(void *, char *))&handle_debug, False},

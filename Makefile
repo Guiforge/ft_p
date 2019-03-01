@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: guiforge <guiforge@student.42.fr>          +#+  +:+       +#+         #
+#    By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/05 12:29:27 by gpouyat           #+#    #+#              #
-#    Updated: 2019/02/26 19:52:18 by guiforge         ###   ########.fr        #
+#    Updated: 2019/03/01 17:59:37 by gpouyat          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,9 @@ SRCS_SERVER			+= /server/main.c /server/handle.c /server/handle_ls.c\
 						/server/handle_stor.c
 
 SRCS_CLIENT			+= /client/main.c /client/handle_syst.c /client/handle.c /client/handle_pwd.c \
-						/client/handle_debug.c /client/handle_user.c /client/build_msg.c /client/handle_pass.c
+						/client/handle_debug.c /client/handle_user.c /client/build_msg.c /client/handle_pass.c \
+						/client/handle_quit.c /client/create_dtp.c /client/handle_ls.c /client/handle_cwd.c \
+						/client/send.c /client/handle_get.c /client/handle_stor.c
 
 SRCS_TOOLS			+= /tools/send-recv.c /tools/error.c /tools/ascii_mode.c
 

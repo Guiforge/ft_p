@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   send-recv.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guiforge <guiforge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 17:47:04 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/26 11:38:09 by guiforge         ###   ########.fr       */
+/*   Updated: 2019/03/01 14:32:34 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static char *g_tab_log[] = {
 	"File system"
 };
 
-static void	static_ftp_msg_log(ssize_t id, char *msg)
+void	ftp_msg_log(ssize_t id, char *msg)
 {
 	void	(*inter_log)(const char *fmt, ...);
 	size_t	index;
@@ -56,7 +56,7 @@ void		ftp_send(int sock, char *msg, ssize_t id)
 	if (ret == -1)
 		log_error("send [%s] fail", msg);
 	else if (id != -1)
-		static_ftp_msg_log(id, msg);
+		ftp_msg_log(id, msg);
 	else
 		log_debug("Send: %s", msg);
 	
@@ -80,17 +80,25 @@ void		ftp_send_msg(int sock, char *code, char *msg, size_t id)
 int		ftp_recv(int sock)
 {
 	char		buffer[FTP_MAX_LEN_CMD + 1];
+	ft_bzero(buffer, FTP_MAX_LEN_CMD + 1);
+	if (!ftp_recv_buff(sock, buffer, FTP_MAX_LEN_CMD))
+		return (0);
+	ftp_msg_log(-1, buffer);
+	return (ft_atoi(buffer));
+}
+
+char	*ftp_recv_buff(int sock, char *buffer, size_t len_buff)
+{
 	ssize_t		len;
 
-	len = recv(sock, buffer, FTP_MAX_LEN_CMD, 0);
+	len = recv(sock, buffer, len_buff, 0);
 	if (len == -1)
 	{
 		log_error("ERROR SYSCALL RECV");
-		return (-1);
+		return (NULL);
 	}
 	if (len == 0)
-		return (0);
+		return (NULL);
 	buffer[len - 1] = 0;
-	static_ftp_msg_log(-1, buffer);
-	return (ft_atoi(buffer));
+	return (buffer);
 }

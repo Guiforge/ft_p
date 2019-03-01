@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_ls.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guiforge <guiforge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 17:27:02 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/21 16:25:20 by guiforge         ###   ########.fr       */
+/*   Updated: 2019/03/01 16:01:47 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,9 @@ static void		ftp_run_ls_child(t_ftp_server *serv, int *pipes, char *cmd)
 		path = ft_secu_add(ft_exp_path(".", serv->pwd), M_LVL_FUNCT);
 	if (ftp_serv_check(serv, path) == False)
 	{
-		ftp_send(serv->dtp.cs, FTP_M_F_NOT_A, serv->id);
+		ftp_serv_send(serv, FTP_M_F_NOT_A);
+		//TODO: i'm not sure
+		// ftp_send(serv->dtp.cs, FTP_M_F_NOT_A, serv->id);
 		exit(EXIT_FAILURE);
 	}
 	if (dup2(pipes[1], 2) != -1 && dup2(pipes[1], 1) != -1)

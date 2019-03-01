@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 11:50:15 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/22 16:26:24 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/01 17:32:49 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ int		ftp_serv_new_sock_bind(int port)
 
 void	ftp_serv_close_dtp(t_ftp_server *serv)
 {
+	ftp_serv_send(serv, FTP_M_CLOSE_ODATA);
 	close_reset(&serv->dtp.cs);
 	close_reset(&serv->dtp.sock);
-	ftp_serv_send(serv, FTP_M_CLOSE_ODATA);
 }
 
 int		ftp_serv_accept_dtpcs(t_ftp_server *serv)

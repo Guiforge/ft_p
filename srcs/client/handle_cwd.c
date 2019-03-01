@@ -1,34 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   build_msg.c                                        :+:      :+:    :+:   */
+/*   handle_cwd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/26 19:33:39 by guiforge          #+#    #+#             */
-/*   Updated: 2019/03/01 17:17:12 by gpouyat          ###   ########.fr       */
+/*   Created: 2019/03/01 16:47:23 by gpouyat           #+#    #+#             */
+/*   Updated: 2019/03/01 17:28:25 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/client.h"
 
-char	*build_msg(char *cmd, char *arg, size_t *len)
+int		handle_cwd(t_ftp_client *c, char *cmd)
 {
-	char	*buffer;
+	// char	*buffer;
 
-	if (len)
-	{
-		*len = ft_strlen(cmd) + ft_strlen(arg) + 3;
-		buffer = ft_strnew(*len);
-	}
-	else
-		buffer = ft_strnew(ft_strlen(cmd) + ft_strlen(arg) + 3);
-	
-	if (!buffer)
-		exit(over("ERROR MALLOC", EXIT_FAILURE));
-	ft_strcat(buffer, cmd);
-	if (arg)
-		ft_strcat(buffer, arg);
-	ft_strcat(buffer, "\r\n");
-	return (buffer);
+	// buffer = build_msg("CWD ", cmd, NULL);
+	// ftp_send(c->sock, buffer, -1);
+	// ft_memdel((void **)&buffer);
+	ftp_c_send(c, "CWD ", cmd);
+	return(ftp_recv(c->sock));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_stor.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guiforge <guiforge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 10:31:04 by guiforge          #+#    #+#             */
-/*   Updated: 2019/02/21 16:23:46 by guiforge         ###   ########.fr       */
+/*   Updated: 2019/03/01 19:27:15 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	static_handle_stor(t_ftp_server *serv, char *path)
 	ssize_t	len;
 	char	buffer[2048];
 
-	fd = open(path, O_CREAT);
+	fd = open(path, O_CREAT | O_RDWR, 0666);
 	if (fd == -1)
 	{
 		ftp_serv_send(serv, FTP_M_F_NOT_A);
@@ -29,7 +29,7 @@ static int	static_handle_stor(t_ftp_server *serv, char *path)
 	while ((len = read(serv->dtp.cs, buffer, 2047)) && len != -1)
 	{
 		buffer[len - 1] = 0;
-		log_debug("REC: %s -- len:%lld", buffer, len);
+		log_debug("RECV: len:%lld", len);
 		if (serv->ascii)
 			write(fd, ftp_newline_end(buffer), len);
 		else

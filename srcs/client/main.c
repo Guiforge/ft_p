@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guiforge <guiforge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 17:34:00 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/26 12:19:50 by guiforge         ###   ########.fr       */
+/*   Updated: 2019/03/01 16:46:30 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@ int create_client(char *addr, int port)
 	sin.sin_addr.s_addr = inet_addr(addr);
 	if ((connect(sock, (const struct sockaddr *)&sin, sizeof(sin))) == -1)
 	{
-		printf("ERROR SOCK\n");
-		close(sock);
+		log_error("ERROR SOCK\n");
+		close_reset(&sock);
+		//TODO: NO pas de EXIT
 		exit(EXIT_FAILURE);
 	}
 	return (sock);
@@ -69,6 +70,11 @@ int main(int ac, char **av)
 	int					port;
 	t_ftp_client		c;
 
+	//TODO: init
+	c.ascii = True;
+	c.dtp = -1;
+	c.sock = -1;
+
 	if (ac < 3 || ac > 3)
 	{
 		ft_dprintf(STDERR_FILENO,"usage: %s <IP> <PORT>\n", *av);
@@ -78,6 +84,12 @@ int main(int ac, char **av)
 	log_init(NULL, STDERR_FILENO);
 	port = atoi(av[2]);
 	c.sock = create_client(av[1], port);
+	//TODO: PAS utile
+	if (c.sock == -1)
+	{
+		log_error("Impossible to connect");
+		exit(EXIT_FAILURE);
+	}
 	ftp_recv(c.sock);
 
 	char	*cmd;
