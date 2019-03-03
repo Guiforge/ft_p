@@ -6,15 +6,19 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 11:39:57 by guiforge          #+#    #+#             */
-/*   Updated: 2019/03/01 17:41:57 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/02 14:52:40 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/client.h"
 
 static t_ftp_cmd	g_hands[] = {
-	// {"TYPE", (int (*)(void *, char *))&handle_type, True},
+	{"ASCII", (int (*)(void *, char *))&handle_ascii, True},
+	{"BIN", (int (*)(void *, char *))&handle_bin, True},
+	{"BINARY", (int (*)(void *, char *))&handle_bin, True},
+	{"TYPE", (int (*)(void *, char *))&handle_type, True},
 	{"STOR", (int (*)(void *, char *))&handle_stor, True},
+	{"PUT", (int (*)(void *, char *))&handle_stor, True},
 	{"CWD", (int (*)(void *, char *))&handle_cwd, True},
 	{"CD", (int (*)(void *, char *))&handle_cwd, True},
 	{"RETR", (int (*)(void *, char *))&handle_get, True},
@@ -30,6 +34,18 @@ static t_ftp_cmd	g_hands[] = {
 	{NULL, NULL, False}
 };
 
+static int	handle_help(void)
+{
+	size_t	i;
+
+	i = 0;
+	while (g_hands[i].cmd)
+	{
+		ft_printf("- %s\n", g_hands[i].cmd);
+		i++;
+	}
+	return (EXIT_SUCCESS);
+}
 
 int	handle_cmd(t_ftp_client *c, char *cmd)
 {
@@ -37,7 +53,8 @@ int	handle_cmd(t_ftp_client *c, char *cmd)
 	char		*param;
 
 	i = 0;
-	(void)c;
+	if (ft_strequ("help", cmd))
+		return(handle_help());
 	while (g_hands[i].cmd  && ft_strncmpi(g_hands[i].cmd, cmd, \
 												ft_strlen(g_hands[i].cmd) - 1))
 		i++;

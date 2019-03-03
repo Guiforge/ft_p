@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 16:17:46 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/01 17:52:42 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/02 14:44:47 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,8 @@ int		handle_cwd(t_ftp_client *c, char *cmd);
 int		handle_get(t_ftp_client *c, char *cmd);
 int		handle_stor(t_ftp_client *c, char *cmd);
 void	ftp_c_send(t_ftp_client *c, char *cmd, char *arg);
+int		handle_type(t_ftp_client *c, char *cmd);
+int		handle_bin(t_ftp_client *c, char *cmd);
+int		handle_ascii(t_ftp_client *c, char *cmd);
 
 #endif

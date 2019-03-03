@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/01 17:42:13 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/01 19:11:46 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/03 21:22:39 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int		handle_stor(t_ftp_client *c, char *cmd)
 	send(c->dtp, "\r\n", 2, 0);
 	// send(c->dtp, line, len, 0);
 	close_reset(&c->dtp);
-	ftp_recv(c->sock);
-	return (EXIT_SUCCESS);
+	if (ftp_recv(c->sock) == 226)
+		return (EXIT_SUCCESS);
+	return (EXIT_FAILURE);
 }

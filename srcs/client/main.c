@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 17:34:00 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/01 16:46:30 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/03 21:29:40 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,10 @@ int main(int ac, char **av)
 	ft_putstr("ftp >> ");
 	while((get_next_line(STDIN_FILENO, &cmd)))
 	{
-		handle_cmd(&c, cmd);
+		if (handle_cmd(&c, cmd))
+			ft_printf("{red}ERROR{no}\n");
+		else
+			ft_printf("{green}SUCCESS{no}\n");
 		ft_putstr("ftp >> ");
 		ft_memdel((void **)&cmd);
 	}
