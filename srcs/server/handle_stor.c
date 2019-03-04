@@ -6,26 +6,12 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 10:31:04 by guiforge          #+#    #+#             */
-/*   Updated: 2019/03/04 16:43:06 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/04 18:50:42 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/server.h"
 
-void	see_char(char *buffer, size_t len)
-{
-	size_t i;
-
-	i = 0;
-ft_putstr("-------------------------------------------\n");
-	while(i <= len)
-	{
-		printf("%zu - %c _%d\n", i, buffer[i],  buffer[i]);
-		i++;
-	}
-}
-
-//TODO: test if it is a dir
 static int	static_handle_stor(t_ftp_server *serv, char *path)
 {
 	int		fd;

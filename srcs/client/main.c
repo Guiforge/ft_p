@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 17:34:00 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/04 16:30:06 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/04 16:47:38 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int create_client(char *addr, int port)
 	{
 		log_error("ERROR SOCK\n");
 		close_reset(&sock);
-		return(EXIT_FAILURE);
+		return(-1);
 	}
 	return (sock);
 }

@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 17:27:02 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/04 16:13:01 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/04 18:41:58 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ static int		ftp_run_ls_father(t_ftp_server *serv, int *pipes, pid_t pid)
 	}
 	if (WEXITSTATUS(status))
 	{
-		ftp_serv_close_dtp(serv, True);
+		ftp_serv_close_dtp(serv, 1);
 		return (WEXITSTATUS(status));
 	}
-	ftp_serv_close_dtp(serv, False);
+	ftp_serv_close_dtp(serv, 0);
 	return (0);
 }
 

@@ -6,13 +6,12 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 17:03:24 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/04 16:29:38 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/04 18:50:48 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/server.h"
 
-// STOR toto.txt
 static t_ftp_cmd	g_hands[] = {
 	{"TYPE", (int (*)(void *, char *))&handle_type, True},
 	{"STOR", (int (*)(void *, char *))&handle_stor, True},

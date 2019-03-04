@@ -6,13 +6,11 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/01 13:34:56 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/01 15:26:26 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/04 16:53:57 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/client.h"
-
-//TODO: tests return SErveur wrong reponse
 
 static char	*stat_get_ip(char *buffer, char **port)
 {
@@ -66,7 +64,6 @@ static t_bool stat_get(char *buffer, char **ip, int *port)
 	return (True);
 }
 
-//TODO: on error return
 int	ftp_c_create_dtp(t_ftp_client *c)
 {
 	char	buffer[FTP_MAX_LEN_CMD + 1];
@@ -90,5 +87,10 @@ int	ftp_c_create_dtp(t_ftp_client *c)
 	}
 	log_debug("Connect %s, %d", ip, port);
 	c->dtp = create_client(ip, port);
+	if (c->dtp == -1)
+	{
+		log_error("Can't Connect");
+		return (EXIT_FAILURE);
+	}
 	return (EXIT_SUCCESS);
 }
