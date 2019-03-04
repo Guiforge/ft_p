@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 17:27:02 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/01 16:01:47 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/04 16:13:01 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,48 +25,39 @@ static void		ftp_send_cmd(t_ftp_server *serv, int fdin)
 		ftp_serv_send_data(serv, buffer, len);
 	}
 	ftp_serv_send_data(serv, "\n", 1);
-	ftp_serv_close_dtp(serv);
 }
 
-static int		ftp_run_ls_father(t_ftp_server *sev, int *pipes, pid_t pid)
+static int		ftp_run_ls_father(t_ftp_server *serv, int *pipes, pid_t pid)
 {
 	int		status;
 
 	status = 0;
 	close_reset(&pipes[1]);
-	ftp_send_cmd(sev, pipes[0]);
+	ftp_send_cmd(serv, pipes[0]);
 	close_reset(&pipes[0]);
 	if (wait4(pid, &status, 0, NULL) == -1)
 	{
 		log_fatal("Error wait4");
 		return (-1);
 	}
-	return (WEXITSTATUS(status));
+	if (WEXITSTATUS(status))
+	{
+		ftp_serv_close_dtp(serv, True);
+		return (WEXITSTATUS(status));
+	}
+	ftp_serv_close_dtp(serv, False);
+	return (0);
 }
 
-static void		ftp_run_ls_child(t_ftp_server *serv, int *pipes, char *cmd)
+static void		ftp_run_ls_child(int *pipes, char *path)
 {
-	char *path;
-
 	close_reset(&pipes[0]);
-	if (cmd)
-		path = ft_secu_add(ft_exp_path(cmd, serv->pwd), M_LVL_FUNCT);
-	else
-		path = ft_secu_add(ft_exp_path(".", serv->pwd), M_LVL_FUNCT);
-	if (ftp_serv_check(serv, path) == False)
-	{
-		ftp_serv_send(serv, FTP_M_F_NOT_A);
-		//TODO: i'm not sure
-		// ftp_send(serv->dtp.cs, FTP_M_F_NOT_A, serv->id);
-		exit(EXIT_FAILURE);
-	}
 	if (dup2(pipes[1], 2) != -1 && dup2(pipes[1], 1) != -1)
 		execl("/bin/ls", "ls", "-la", path, NULL);
 	else
 		log_fatal("Dup2 Fail");
 	perror("exec:");
 	log_fatal("Execv fail !!");
-	ft_secu_free(path);
 	exit(EXIT_FAILURE);
 }
 
@@ -74,21 +65,38 @@ static int		ftp_run_ls(t_ftp_server *serv, char *cmd)
 {
 	int		pipes[2];
 	pid_t	pid;
+	char	*path;
 
+	if (cmd)
+		path = ft_secu_add(ft_exp_path(cmd, serv->pwd), M_LVL_FUNCT);
+	else
+		path = ft_secu_add(ft_exp_path(".", serv->pwd), M_LVL_FUNCT);
+	if (ftp_serv_check(serv, path) == False)
+	{
+		ftp_serv_send(serv, FTP_M_F_NOT_A);
+		return(EXIT_FAILURE);
+	}
 	if (pipe(pipes) == -1)
+	{
 		return (over_log(-1, LOG_LVL_ERROR, "pipes fail"));
+		ft_secu_free(path);
+	}
 	if ((pid = fork()) == -1)
 	{
 		log_error("Fork fail!");
 		close_reset(&pipes[0]);
 		close_reset(&pipes[1]);
-		return (-1);
+		ft_secu_free(path);
+		return (EXIT_FAILURE);
 	}
 	else if (pid)
+	{
+		ft_secu_free(path);
 		return (ftp_run_ls_father(serv, pipes, pid));
+	}
 	else
-		ftp_run_ls_child(serv, pipes, cmd);
-	return (-1);
+		ftp_run_ls_child(pipes, path);
+	return (EXIT_FAILURE);
 }
 
 int				handle_ls(t_ftp_server *serv, char *cmd)

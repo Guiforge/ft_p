@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_get.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guiforge <guiforge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 14:11:37 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/21 16:23:46 by guiforge         ###   ########.fr       */
+/*   Updated: 2019/03/04 16:40:26 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,6 @@ int		handle_get(t_ftp_server *serv, char *cmd)
 	ftp_serv_accept_dtpcs(serv);
 	ftp_serv_send(serv, FTP_M_OK_ODATA);
 	send_file(serv, cmd);
-	ftp_serv_close_dtp(serv);
+	ftp_serv_close_dtp(serv, 0);
 	return (EXIT_SUCCESS);
 }

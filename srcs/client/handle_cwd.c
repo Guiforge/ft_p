@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/01 16:47:23 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/03 21:28:12 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/04 16:29:38 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int		handle_cwd(t_ftp_client *c, char *cmd)
 
 	// buffer = build_msg("CWD ", cmd, NULL);
 	// ftp_send(c->sock, buffer, -1);
-	// ft_memdel((void **)&buffer);
+	// ft_strdel(&buffer);
 	ftp_c_send(c, "CWD ", cmd);
 	if (ftp_recv(c->sock) == 250)
 		return (EXIT_SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 17:03:24 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/01 19:13:43 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/04 16:29:38 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ void		ftp_handle_cmd(t_ftp_server *serv)
 	while ((ret = get_next_line(serv->pi.cs, &line)) && ret != -1)
 	{
 		exec_handler(serv, line);
-		ft_memdel((void **)&line);
+		ft_strdel(&line);
 	}
 	if (line)
-		ft_memdel((void **)&line);
+		ft_strdel(&line);
 }

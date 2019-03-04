@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 12:10:40 by guiforge          #+#    #+#             */
-/*   Updated: 2019/03/03 21:27:22 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/04 16:29:38 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int		handle_debug(t_ftp_client *c, char *cmd)
 	buffer = ft_strcpy(buffer, cmd);
 	ft_strcat(buffer, "\n");
 	ftp_send(c->sock, buffer, -1);
-	ft_memdel((void **)&buffer);
+	ft_strdel(&buffer);
 	if (ftp_recv(c->sock) < 400)
 		return (EXIT_SUCCESS);
 	return (EXIT_FAILURE);

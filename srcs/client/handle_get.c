@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/01 17:05:13 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/01 17:53:39 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/04 12:08:24 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int		handle_get(t_ftp_client *c, char *cmd)
 	{
 		log_error("Cannot open %s", cmd);
 		close_reset(&c->dtp);
+		ftp_recv(c->sock);
 		return (EXIT_FAILURE);
 	}
 	while ((ret = get_next_line(c->dtp, &line)) && ret != -1)

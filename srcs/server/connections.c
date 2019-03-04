@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 11:50:15 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/01 17:32:49 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/04 16:39:49 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ pid_t	ftp_serv_new_connect(t_ftp_server *serv)
 		return (ftp_over_cconnect(serv->pi.cs, "Error fork", 0, serv->id));
 	else if (pid > 0)
 	{
-		wait4(pid, NULL, WUNTRACED, NULL);
+		wait4(pid, NULL, WNOHANG, NULL);
 		close_reset(&(serv->pi.cs));
 		return (pid);
 	}
@@ -53,9 +53,12 @@ int		ftp_serv_new_sock_bind(int port)
 	return (sock);
 }
 
-void	ftp_serv_close_dtp(t_ftp_server *serv)
+void	ftp_serv_close_dtp(t_ftp_server *serv, int is_error)
 {
-	ftp_serv_send(serv, FTP_M_CLOSE_ODATA);
+	if (is_error == 1)
+		ftp_serv_send(serv, FTP_M_ABRT);
+	else if (!is_error)
+		ftp_serv_send(serv, FTP_M_CLOSE_ODATA);
 	close_reset(&serv->dtp.cs);
 	close_reset(&serv->dtp.sock);
 }
