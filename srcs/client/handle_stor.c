@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_stor.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: guiforge <guiforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/01 17:42:13 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/04 15:43:35 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/05 17:22:14 by guiforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	stat_read_send(t_ftp_client *c, int fd)
 	buffer = NULL;
 	while((len = read(fd, line, 2047)) && len != -1)
 	{
-		buffer[len] = 0;
+		line[len] = 0;
 		if (c->ascii)
 		{
 			buffer = ftp_cr_end(line, len);

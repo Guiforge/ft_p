@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_get.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: guiforge <guiforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/01 17:05:13 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/04 12:08:24 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/05 17:32:24 by guiforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int		handle_get(t_ftp_client *c, char *cmd)
 			ft_putendl_fd(line, fd);
 		ft_strdel(&line);
 	}
+	ft_strdel(&line);
 	ftp_recv(c->sock);
 	return (EXIT_SUCCESS);
 }

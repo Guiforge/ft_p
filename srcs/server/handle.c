@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: guiforge <guiforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 17:03:24 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/04 18:50:48 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/05 17:32:51 by guiforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,5 @@ void		ftp_handle_cmd(t_ftp_server *serv)
 		exec_handler(serv, line);
 		ft_strdel(&line);
 	}
-	if (line)
-		ft_strdel(&line);
+	ft_strdel(&line);
 }
