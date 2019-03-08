@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 17:34:00 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/08 16:24:12 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/08 16:25:57 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ static void	cmd(t_ftp_client *c)
 	close(c->sock);
 }
 
+// TODO: Localhost 4242
 int			main(int ac, char **av)
 {
 	int					port;
