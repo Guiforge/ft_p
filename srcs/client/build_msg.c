@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 19:33:39 by guiforge          #+#    #+#             */
-/*   Updated: 2019/03/01 17:17:12 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/08 16:06:34 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ char	*build_msg(char *cmd, char *arg, size_t *len)
 	}
 	else
 		buffer = ft_strnew(ft_strlen(cmd) + ft_strlen(arg) + 3);
-	
 	if (!buffer)
 		exit(over("ERROR MALLOC", EXIT_FAILURE));
 	ft_strcat(buffer, cmd);

@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 17:27:02 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/08 16:01:02 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/08 16:03:58 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static int		ftp_run_ls(t_ftp_server *serv, char *cmd)
 	if (ftp_serv_check(serv, path) == False)
 	{
 		ftp_serv_send(serv, FTP_M_F_NOT_A);
-		return(EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	}
 	if (pipe(pipes) == -1)
 	{

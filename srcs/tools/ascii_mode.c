@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 18:04:32 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/04 15:25:08 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/08 16:04:39 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,12 @@ char	*ftp_cr_end(char *buffer, size_t len)
 
 char	*ftp_newline_end(char *buffer)
 {
-	char *cpy;
+	char	*cpy;
 
 	cpy = buffer;
 	if (!buffer)
 		return (NULL);
-	while((buffer = ft_strstr(buffer, "\r\n")))
+	while ((buffer = ft_strstr(buffer, "\r\n")))
 		ft_strcpy(buffer, buffer + 1);
-	return(cpy);
+	return (cpy);
 }

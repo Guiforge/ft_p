@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/01 17:42:13 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/08 15:28:49 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/08 16:21:48 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 static void	stat_read_send(t_ftp_client *c, int fd)
 {
 	char	line[2048];
-	ssize_t len;
-	char *buffer;
+	ssize_t	len;
+	char	*buffer;
 
 	buffer = NULL;
-	while((len = read(fd, line, 2047)) && len != -1)
+	while ((len = read(fd, line, 2047)) && len != -1)
 	{
 		line[len] = 0;
 		if (c->ascii)
@@ -34,7 +34,7 @@ static void	stat_read_send(t_ftp_client *c, int fd)
 	ft_strdel(&buffer);
 }
 
-int		handle_stor(t_ftp_client *c, char *cmd)
+int			handle_stor(t_ftp_client *c, char *cmd)
 {
 	int		fd;
 
@@ -46,7 +46,7 @@ int		handle_stor(t_ftp_client *c, char *cmd)
 		return (EXIT_FAILURE);
 	}
 	if (ftp_c_create_dtp(c) == EXIT_FAILURE)
-		return(EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	ftp_c_send(c, "STOR ", cmd);
 	if (ftp_recv(c->sock) != 150)
 		return (EXIT_FAILURE);

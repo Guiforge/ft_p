@@ -6,16 +6,16 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/01 13:34:56 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/04 16:53:57 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/08 16:08:30 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/client.h"
 
-static char	*stat_get_ip(char *buffer, char **port)
+static char		*stat_get_ip(char *buffer, char **port)
 {
-	char	*start;
-	char	*end;
+	char		*start;
+	char		*end;
 
 	*port = NULL;
 	if (!buffer || *buffer != '(' || !buffer[1])
@@ -30,7 +30,7 @@ static char	*stat_get_ip(char *buffer, char **port)
 	return (start);
 }
 
-static int	stat_get_port(char *start, int *port)
+static int		stat_get_port(char *start, int *port)
 {
 	int			sep;
 
@@ -44,12 +44,12 @@ static int	stat_get_port(char *start, int *port)
 	return (True);
 }
 
-static t_bool stat_get(char *buffer, char **ip, int *port)
+static t_bool	stat_get(char *buffer, char **ip, int *port)
 {
-	char	*star_port;
+	char		*star_port;
 
-	if(!ip || !port || !buffer)
-		return(False);
+	if (!ip || !port || !buffer)
+		return (False);
 	*ip = stat_get_ip(buffer, &star_port);
 	if (!*ip)
 	{
@@ -64,12 +64,12 @@ static t_bool stat_get(char *buffer, char **ip, int *port)
 	return (True);
 }
 
-int	ftp_c_create_dtp(t_ftp_client *c)
+int				ftp_c_create_dtp(t_ftp_client *c)
 {
-	char	buffer[FTP_MAX_LEN_CMD + 1];
-	int		ret;
-	char	*ip;
-	int		port;
+	char		buffer[FTP_MAX_LEN_CMD + 1];
+	int			ret;
+	char		*ip;
+	int			port;
 
 	ftp_send(c->sock, "PASV\r\n", -1);
 	ret = ft_atoi(ftp_recv_buff(c->sock, buffer, FTP_MAX_LEN_CMD));
@@ -85,9 +85,7 @@ int	ftp_c_create_dtp(t_ftp_client *c)
 		log_error("Passive mode erreur cannot get port or ip");
 		return (EXIT_FAILURE);
 	}
-	log_debug("Connect %s, %d", ip, port);
-	c->dtp = create_client(ip, port);
-	if (c->dtp == -1)
+	if ((c->dtp = create_client(ip, port)) == -1)
 	{
 		log_error("Can't Connect");
 		return (EXIT_FAILURE);

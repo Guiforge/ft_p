@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 11:39:57 by guiforge          #+#    #+#             */
-/*   Updated: 2019/03/02 14:52:40 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/08 16:22:56 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,15 @@ static int	handle_help(void)
 	return (EXIT_SUCCESS);
 }
 
-int	handle_cmd(t_ftp_client *c, char *cmd)
+int			handle_cmd(t_ftp_client *c, char *cmd)
 {
 	size_t		i;
 	char		*param;
 
 	i = 0;
 	if (ft_strequ("help", cmd))
-		return(handle_help());
-	while (g_hands[i].cmd  && ft_strncmpi(g_hands[i].cmd, cmd, \
+		return (handle_help());
+	while (g_hands[i].cmd && ft_strncmpi(g_hands[i].cmd, cmd, \
 												ft_strlen(g_hands[i].cmd) - 1))
 		i++;
 	if (g_hands[i].cmd)

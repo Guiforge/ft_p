@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 17:34:00 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/08 15:58:20 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/08 16:24:12 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 #include <arpa/inet.h>
 #include "../../includes/client.h"
 
-
-int create_client(char *addr, int port)
+int			create_client(char *addr, int port)
 {
 	int					sock;
 	struct protoent		*proto;
@@ -32,12 +31,12 @@ int create_client(char *addr, int port)
 	{
 		log_error("ERROR SOCK\n");
 		close_reset(&sock);
-		return(-1);
+		return (-1);
 	}
 	return (sock);
 }
 
-char	*get_cmd(size_t *len)
+char		*get_cmd(size_t *len)
 {
 	ssize_t		len_intern;
 	char		*buffer;
@@ -68,12 +67,12 @@ static int	init_client(t_ftp_client *c)
 	return (log_init(NULL, STDERR_FILENO));
 }
 
-static void cmd(t_ftp_client *c)
+static void	cmd(t_ftp_client *c)
 {
 	char	*cmd;
 
 	ft_putstr("ftp >> ");
-	while((get_next_line(STDIN_FILENO, &cmd)))
+	while ((get_next_line(STDIN_FILENO, &cmd)))
 	{
 		if (handle_cmd(c, cmd))
 			ft_printf("{red}ERROR{no}\n");
@@ -87,14 +86,14 @@ static void cmd(t_ftp_client *c)
 	close(c->sock);
 }
 
-int main(int ac, char **av)
+int			main(int ac, char **av)
 {
 	int					port;
 	t_ftp_client		c;
 
 	if (ac < 3 || ac > 3)
 	{
-		ft_dprintf(STDERR_FILENO,"usage: %s <IP> <PORT>\n", *av);
+		ft_dprintf(STDERR_FILENO, "usage: %s <IP> <PORT>\n", *av);
 		return (EXIT_FAILURE);
 	}
 	if (init_client(&c) == -1)

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   send-recv.c                                        :+:      :+:    :+:   */
+/*   send_recv.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 17:47:04 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/01 14:32:34 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/08 16:06:06 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static char *g_tab_log[] = {
 	"File system"
 };
 
-void	ftp_msg_log(ssize_t id, char *msg)
+void		ftp_msg_log(ssize_t id, char *msg)
 {
 	void	(*inter_log)(const char *fmt, ...);
 	size_t	index;
@@ -59,7 +59,6 @@ void		ftp_send(int sock, char *msg, ssize_t id)
 		ftp_msg_log(id, msg);
 	else
 		log_debug("Send: %s", msg);
-	
 }
 
 void		ftp_send_msg(int sock, char *code, char *msg, size_t id)
@@ -77,9 +76,10 @@ void		ftp_send_msg(int sock, char *code, char *msg, size_t id)
 	free(final_msg);
 }
 
-int		ftp_recv(int sock)
+int			ftp_recv(int sock)
 {
 	char		buffer[FTP_MAX_LEN_CMD + 1];
+
 	ft_bzero(buffer, FTP_MAX_LEN_CMD + 1);
 	if (!ftp_recv_buff(sock, buffer, FTP_MAX_LEN_CMD))
 		return (0);
@@ -87,7 +87,7 @@ int		ftp_recv(int sock)
 	return (ft_atoi(buffer));
 }
 
-char	*ftp_recv_buff(int sock, char *buffer, size_t len_buff)
+char		*ftp_recv_buff(int sock, char *buffer, size_t len_buff)
 {
 	ssize_t		len;
 
