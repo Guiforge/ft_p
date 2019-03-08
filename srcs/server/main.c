@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guiforge <guiforge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 17:34:00 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/21 16:17:49 by guiforge         ###   ########.fr       */
+/*   Updated: 2019/03/08 14:44:16 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ t_ftp_server			ftp_init(void)
 	}
 	ft_strcpy(context.base, context.pwd);
 	context.ascii = True;
+	context.user_log = (t_ftp_user){NULL, NULL, False};
 	return (context);
 }
 

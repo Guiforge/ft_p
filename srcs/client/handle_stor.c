@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_stor.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guiforge <guiforge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/01 17:42:13 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/05 17:22:14 by guiforge         ###   ########.fr       */
+/*   Updated: 2019/03/08 15:28:49 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	stat_read_send(t_ftp_client *c, int fd)
 			ft_strdel(&buffer);
 		}
 		else
-			send(c->dtp, line, len + 1, 0);
+			send(c->dtp, line, len, 0);
 	}
 	ft_strdel(&buffer);
 }

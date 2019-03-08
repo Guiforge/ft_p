@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 17:34:00 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/04 16:47:38 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/08 15:58:20 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,7 @@ int create_client(char *addr, int port)
 	struct sockaddr_in	sin;
 
 	if (!(proto = getprotobyname("tcp")))
-	{
-		printf("ERROR GETPROTO\n");
-		return (-1);
-	}
+		return (over("ERROR GETPROTO\n", -1));
 	sock = socket(PF_INET, SOCK_STREAM, proto->p_proto);
 	sin.sin_family = AF_INET;
 	sin.sin_port = htons(port);
@@ -102,7 +99,7 @@ int main(int ac, char **av)
 	}
 	if (init_client(&c) == -1)
 		return (over("Error init client", EXIT_FAILURE));
-	port = atoi(av[2]);
+	port = ft_atoi(av[2]);
 	c.sock = create_client(av[1], port);
 	if (c.sock == -1)
 	{

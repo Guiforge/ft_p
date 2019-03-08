@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 14:11:37 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/04 16:40:26 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/08 16:01:59 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,11 @@ static void	send_file(t_ftp_server *serv, char *path)
 		ftp_serv_send(serv, FTP_M_F_NOT_A);
 		return ;
 	}
-	while((len = read(fd, buffer, 1047)) && len != -1)
+	while((len = read(fd, buffer, sizeof(buffer) - 1)) && len != -1)
 	{
-		buffer[len - 1] = 0;
+		buffer[len] = 0;
 		ftp_serv_send_data(serv, buffer, len);
 	}
-	ftp_serv_send_data(serv, "\n", 1);
 }
 
 int		handle_get(t_ftp_server *serv, char *cmd)

@@ -6,11 +6,12 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 17:27:02 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/04 18:41:58 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/08 16:01:02 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/server.h"
+//TODO: without exec
 
 static void		ftp_send_cmd(t_ftp_server *serv, int fdin)
 {
