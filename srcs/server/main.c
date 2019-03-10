@@ -6,11 +6,13 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 17:34:00 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/08 14:44:16 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/10 14:38:48 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/server.h"
+
+extern int g_optind;
 
 int						create_server(char *av_port)
 {
@@ -50,7 +52,7 @@ t_ftp_server			ftp_init(void)
 	}
 	ft_strcpy(context.base, context.pwd);
 	context.ascii = True;
-	context.user_log = (t_ftp_user){NULL, NULL, False};
+	context.user_log = (t_ftp_user){NULL, NULL, False, NULL};
 	return (context);
 }
 
@@ -61,11 +63,16 @@ int						main(int ac, char **av)
 	struct sockaddr_in	csin;
 	size_t				id;
 
-	(void)ac;
 	id = 0;
-	log_init(NULL, STDERR_FILENO);
+	if (ac > 3)
+	{
+		ft_dprintf(STDERR_FILENO, "usage: %s -[t] <PORT>\n", *av);
+		return (EXIT_FAILURE);
+	}
+	if (ft_getopt(ac, (char const **)av, "t") == 't')
+		log_init(NULL, STDERR_FILENO);
 	serv = ftp_init();
-	serv.pi.sock = create_server(av[1]);
+	serv.pi.sock = create_server(av[g_optind]);
 	while (42)
 	{
 		cslen = sizeof(csin);

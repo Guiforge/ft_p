@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: guiforge <guiforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 17:36:14 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/04 16:40:02 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/10 13:50:19 by guiforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct		s_ftp_user {
 	char			*user;
 	char			*pass;
 	t_bool			admin;
+	char			*home;
 }					t_ftp_user;
 
 typedef struct		s_ftp_server {
@@ -43,6 +44,7 @@ typedef struct		s_ftp_server {
 
 # define FTP_BACKLOG 42
 
+void				ftp_serv_get_pwd_secure(t_ftp_server *serv, char pwd[PATH_MAX + 1]);
 ssize_t				ftp_serv_send_data(t_ftp_server *serv, char *buffer, size_t len_buffer);
 int					ftp_serv_accept_dtpcs(t_ftp_server *serv);
 void				ftp_serv_close_dtp(t_ftp_server *serv, int is_error);

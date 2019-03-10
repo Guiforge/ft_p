@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: guiforge <guiforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 17:34:00 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/08 16:25:57 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/10 11:45:28 by guiforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,16 @@ int			create_client(char *addr, int port)
 	int					sock;
 	struct protoent		*proto;
 	struct sockaddr_in	sin;
+	struct hostent		*h;
 
 	if (!(proto = getprotobyname("tcp")))
 		return (over("ERROR GETPROTO\n", -1));
 	sock = socket(PF_INET, SOCK_STREAM, proto->p_proto);
 	sin.sin_family = AF_INET;
 	sin.sin_port = htons(port);
-	sin.sin_addr.s_addr = inet_addr(addr);
+	if (!(h = gethostbyname(addr)))
+		return (over("gethostbyname error\n", -1));
+	ft_memcpy(&(sin.sin_addr.s_addr), h->h_addr, h->h_length);
 	if ((connect(sock, (const struct sockaddr *)&sin, sizeof(sin))) == -1)
 	{
 		log_error("ERROR SOCK\n");
@@ -86,13 +89,12 @@ static void	cmd(t_ftp_client *c)
 	close(c->sock);
 }
 
-// TODO: Localhost 4242
 int			main(int ac, char **av)
 {
 	int					port;
 	t_ftp_client		c;
 
-	if (ac < 3 || ac > 3)
+	if (ac != 3)
 	{
 		ft_dprintf(STDERR_FILENO, "usage: %s <IP> <PORT>\n", *av);
 		return (EXIT_FAILURE);

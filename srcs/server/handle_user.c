@@ -6,7 +6,7 @@
 /*   By: guiforge <guiforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 18:20:35 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/02/21 16:23:46 by guiforge         ###   ########.fr       */
+/*   Updated: 2019/03/10 13:59:04 by guiforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@
 */
 
 static t_ftp_user	g_users[] = {
-	{"a", "a", False},
-	{"toto", "toto", False},
-	{"admin", "admin", True},
-	{NULL, NULL, False}
+	{"a", "a", False, "/users/a"},
+	{"toto", "toto", False, "/users/toto"},
+	{"admin", "admin", True, "/"},
+	{NULL, NULL, False, NULL}
 };
 
 static	t_ftp_user	*g_user = NULL;
@@ -68,6 +68,7 @@ static t_bool		static_init_user(t_ftp_server *serv)
 	if (serv->user_log.admin)
 		return (True);
 	ftp_serv_get_home(serv, home);
+	log_debug("home: %s", home);
 	return (ftp_serv_mv(serv, home));
 }
 
