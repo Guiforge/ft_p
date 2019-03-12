@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 17:27:02 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/12 16:30:49 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/12 17:23:36 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,9 @@ static void		ftp_send_cmd(t_ftp_server *serv, int fdin)
 	ftp_serv_send(serv, FTP_M_OK_ODATA);
 	while ((len = read(fdin, buffer, sizeof(buffer) - 1)) && len != -1)
 	{
-		buffer[len - 1] = 0;
+		buffer[len] = 0;
 		ftp_serv_send_data(serv, buffer, len);
 	}
-	ftp_serv_send_data(serv, "\n", 1);
 }
 
 static int		ftp_run_ls_father(t_ftp_server *serv, int *pipes, pid_t pid)
