@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 11:39:57 by guiforge          #+#    #+#             */
-/*   Updated: 2019/03/08 16:22:56 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/12 16:39:46 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@ static t_ftp_cmd	g_hands[] = {
 	{"USER", (int (*)(void *, char *))&handle_user, False},
 	{"DEBUG", (int (*)(void *, char *))&handle_debug, False},
 	{"PASS", (int (*)(void *, char *))&handle_pass, False},
+	{"LCD", (int (*)(void *, char *))&handle_lcd, False},
+	{"LLS", (int (*)(void *, char *))&handle_lls, False},
+	{"LPWD", (int (*)(void *, char *))&handle_lpwd, False},
 	{NULL, NULL, False}
 };
 

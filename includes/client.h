@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 16:17:46 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/02 14:44:47 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/12 16:43:00 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@
 #include "../includes/tools.h"
 
 typedef struct		s_ftp_client {
-	char			pwd[PATH_MAX + 1];
 	int				sock;
-	// t_ftp_connect	pi;
 	int				dtp;
 	t_bool			ascii;
 }					t_ftp_client;
@@ -41,5 +39,8 @@ void	ftp_c_send(t_ftp_client *c, char *cmd, char *arg);
 int		handle_type(t_ftp_client *c, char *cmd);
 int		handle_bin(t_ftp_client *c, char *cmd);
 int		handle_ascii(t_ftp_client *c, char *cmd);
+int		handle_lcd(t_ftp_client *c, char *cmd);
+int		handle_lls(t_ftp_client *c, char *cmd);
+int		handle_lpwd(t_ftp_client *c, char *cmd);
 
 #endif
