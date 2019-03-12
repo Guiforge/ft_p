@@ -6,7 +6,7 @@
 #    By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/05 12:29:27 by gpouyat           #+#    #+#              #
-#    Updated: 2019/03/08 16:05:16 by gpouyat          ###   ########.fr        #
+#    Updated: 2019/03/12 16:39:27 by gpouyat          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,8 @@ SRCS_SERVER			+= /server/main.c /server/handle.c /server/handle_ls.c\
 SRCS_CLIENT			+= /client/main.c /client/handle_syst.c /client/handle.c /client/handle_pwd.c \
 						/client/handle_debug.c /client/handle_user.c /client/build_msg.c /client/handle_pass.c \
 						/client/handle_quit.c /client/create_dtp.c /client/handle_ls.c /client/handle_cwd.c \
-						/client/send.c /client/handle_get.c /client/handle_stor.c /client/handle_type.c
+						/client/send.c /client/handle_get.c /client/handle_stor.c /client/handle_type.c \
+						/client/handle_lcd.c /client/handle_lls.c /client/handle_lpwd.c
 
 SRCS_TOOLS			+= /tools/send_recv.c /tools/error.c /tools/ascii_mode.c
 

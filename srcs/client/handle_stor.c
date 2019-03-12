@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/01 17:42:13 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/08 16:21:48 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/12 16:47:51 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int			handle_stor(t_ftp_client *c, char *cmd)
 {
 	int		fd;
 
-	fd = open(cmd, O_RDWR, 0666);
+	fd = open(cmd, O_RDWR);
 	if (fd == -1)
 	{
 		log_error("Cannot open %s", cmd);

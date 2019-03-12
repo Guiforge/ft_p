@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guiforge <guiforge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 17:34:00 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/10 11:45:28 by guiforge         ###   ########.fr       */
+/*   Updated: 2019/03/12 16:46:01 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+//TODO: check header
 #include <sys/socket.h>
 #include <netdb.h>
 #include <arpa/inet.h>
@@ -64,7 +65,7 @@ char		*get_cmd(size_t *len)
 
 static int	init_client(t_ftp_client *c)
 {
-	c->ascii = True;
+	c->ascii = False;
 	c->dtp = -1;
 	c->sock = -1;
 	return (log_init(NULL, STDERR_FILENO));

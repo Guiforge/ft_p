@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 17:34:00 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/10 14:38:48 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/12 16:46:22 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int						create_server(char *av_port)
 	int					port;
 	int					sock;
 	struct protoent		*proto;
-	struct sockaddr_in	sin;
+	struct sockaddr_in6	sin;
 
 	if (av_port)
 		port = ft_atoi(av_port);
@@ -27,10 +27,10 @@ int						create_server(char *av_port)
 		port = 4242;
 	if (!(proto = getprotobyname("tcp")))
 		return (over_log(-1, LOG_LVL_ERROR, "getprotobyname(tcp)"));
-	sock = socket(PF_INET, SOCK_STREAM, proto->p_proto);
-	sin.sin_family = AF_INET;
-	sin.sin_port = htons(port);
-	sin.sin_addr.s_addr = htonl(INADDR_ANY);
+	sock = socket(PF_INET6, SOCK_STREAM, proto->p_proto);
+	sin.sin6_family = AF_INET6;
+	sin.sin6_port = htons(port);
+	sin.sin6_addr = in6addr_any;
 	if ((bind(sock, (const struct sockaddr *)&sin, sizeof(sin))) == -1)
 		ftp_err_close_exit(sock, LOG_LVL_ERROR, "bind fail");
 	if (listen(sock, FTP_PORT_LISTEN))
@@ -51,7 +51,7 @@ t_ftp_server			ftp_init(void)
 		exit(EXIT_FAILURE);
 	}
 	ft_strcpy(context.base, context.pwd);
-	context.ascii = True;
+	context.ascii = False;
 	context.user_log = (t_ftp_user){NULL, NULL, False, NULL};
 	return (context);
 }
