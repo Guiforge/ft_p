@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 16:17:46 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/12 17:13:48 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/15 14:34:08 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ typedef struct		s_ftp_client {
 	int				sock;
 	int				dtp;
 	t_bool			ascii;
+	struct hostent	*host;
 }					t_ftp_client;
 
 int		handle_syst(t_ftp_client *c, char *cmd);
@@ -31,7 +32,7 @@ char	*build_msg(char *cmd, char *arg, size_t *len);
 int		handle_quit(t_ftp_client *c, char *cmd);
 int		handle_ls(t_ftp_client *c, char *cmd);
 int		ftp_c_create_dtp(t_ftp_client *c);
-int		create_client(char *addr, int port);
+int		create_client(t_ftp_client *c, char *addr, int port);
 int		handle_cwd(t_ftp_client *c, char *cmd);
 int		handle_get(t_ftp_client *c, char *cmd);
 int		handle_stor(t_ftp_client *c, char *cmd);

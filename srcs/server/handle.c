@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 17:03:24 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/12 17:12:27 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/15 14:54:44 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static t_ftp_cmd	g_hands[] = {
 	{"SYST", (int (*)(void *, char *))&handle_syst, True},
 	{"USER", (int (*)(void *, char *))&handle_user, False},
 	{"PASS", (int (*)(void *, char *))&handle_pass, False},
+	{"EPSV", (int (*)(void *, char *))&handle_epsv, True},
 	{"DELE", (int (*)(void *, char *))&handle_dele, True},
 	{"UNLINK", (int (*)(void *, char *))&handle_dele, True},
 	{NULL, NULL, False}

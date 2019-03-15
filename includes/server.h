@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 17:36:14 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/12 17:11:21 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/15 12:16:47 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,6 @@ t_bool				ftp_serv_mv(t_ftp_server *serv, char *path);
 void				ftp_serv_send(t_ftp_server *serv, char *msg);
 void				ftp_serv_send_msg(t_ftp_server *serv, char *code, char *msg);
 int					handle_dele(t_ftp_server *serv, char *cmd);
+int					handle_epsv(t_ftp_server *serv, char *cmd);
 
 #endif

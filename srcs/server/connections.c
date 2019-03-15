@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 11:50:15 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/10 15:45:07 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/15 12:06:23 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,17 @@ pid_t	ftp_serv_new_connect(t_ftp_server *serv)
 
 int		ftp_serv_new_sock_bind(int port)
 {
-	struct sockaddr_in		sin;
+	struct sockaddr_in6		sin;
 	int						sock;
 	struct protoent			*proto;
 
 	if (!(proto = getprotobyname("tcp")))
 		return (over_log(-1, LOG_LVL_ERROR, "getprotobyname(tcp)"));
-	sock = socket(PF_INET, SOCK_STREAM, proto->p_proto);
-	sin.sin_family = AF_INET;
-	sin.sin_port = htons(port);
+	sock = socket(PF_INET6, SOCK_STREAM, proto->p_proto);
+	sin.sin6_family = AF_INET6;
+	sin.sin6_port = htons(port);
 	// Mac oS ?sin.sin_len = sizeof(sin);
-	sin.sin_addr.s_addr = htonl(INADDR_ANY);
+	sin.sin6_addr = in6addr_any;
 	if ((bind(sock, (const struct sockaddr *)&sin, sizeof(sin))) == -1)
 		close_reset(&sock);
 	return (sock);

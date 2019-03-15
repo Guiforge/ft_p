@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/01 13:34:56 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/08 16:08:30 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/15 14:37:05 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static t_bool	stat_get(char *buffer, char **ip, int *port)
 	return (True);
 }
 
-int				ftp_c_create_dtp(t_ftp_client *c)
+int				ftp_c_create_dtp_pasv(t_ftp_client *c)
 {
 	char		buffer[FTP_MAX_LEN_CMD + 1];
 	int			ret;
@@ -85,10 +85,49 @@ int				ftp_c_create_dtp(t_ftp_client *c)
 		log_error("Passive mode erreur cannot get port or ip");
 		return (EXIT_FAILURE);
 	}
-	if ((c->dtp = create_client(ip, port)) == -1)
+	if ((c->dtp = create_client(c, ip, port)) == -1)
 	{
 		log_error("Can't Connect");
 		return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
+}
+
+int				ftp_c_create_dtp_epsv(t_ftp_client *c)
+{
+	int		ret;
+	char	buffer[FTP_MAX_LEN_CMD + 1];
+	int		port;
+	char	*start_port;
+
+	ftp_send(c->sock, "EPSV\r\n", -1);
+	ret = ft_atoi(ftp_recv_buff(c->sock, buffer, sizeof(buffer) - 1));
+	ftp_msg_log(-1, buffer);
+	if (!ret || ret != 229)
+	{
+		log_error("Extend Passive Extend mode erreur: Wrong return Code");
+		return (EXIT_FAILURE);
+	}
+	if(!(start_port = ft_strstr(buffer, "|||")))
+	{
+		log_error("Passive mode Extend erreur cannot get port or ip");
+		return (EXIT_FAILURE);
+	}
+	start_port += 3;
+	port = ft_atoi(start_port);
+	if ((c->dtp = create_client(c, NULL, port)) == -1)
+	{
+		log_error("Can't Connect");
+		return (EXIT_FAILURE);
+	}
+	return (EXIT_SUCCESS);
+}
+
+int				ftp_c_create_dtp(t_ftp_client *c)
+{
+	if(ftp_c_create_dtp_epsv(c) == EXIT_SUCCESS)
+		return (EXIT_SUCCESS);
+	if(ftp_c_create_dtp_pasv(c) == EXIT_SUCCESS)
+		return (EXIT_SUCCESS);
+	return (EXIT_FAILURE);
 }

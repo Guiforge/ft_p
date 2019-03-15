@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 17:34:00 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/12 16:46:01 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/15 14:34:59 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,30 +15,6 @@
 #include <netdb.h>
 #include <arpa/inet.h>
 #include "../../includes/client.h"
-
-int			create_client(char *addr, int port)
-{
-	int					sock;
-	struct protoent		*proto;
-	struct sockaddr_in	sin;
-	struct hostent		*h;
-
-	if (!(proto = getprotobyname("tcp")))
-		return (over("ERROR GETPROTO\n", -1));
-	sock = socket(PF_INET, SOCK_STREAM, proto->p_proto);
-	sin.sin_family = AF_INET;
-	sin.sin_port = htons(port);
-	if (!(h = gethostbyname(addr)))
-		return (over("gethostbyname error\n", -1));
-	ft_memcpy(&(sin.sin_addr.s_addr), h->h_addr, h->h_length);
-	if ((connect(sock, (const struct sockaddr *)&sin, sizeof(sin))) == -1)
-	{
-		log_error("ERROR SOCK\n");
-		close_reset(&sock);
-		return (-1);
-	}
-	return (sock);
-}
 
 char		*get_cmd(size_t *len)
 {
@@ -68,6 +44,7 @@ static int	init_client(t_ftp_client *c)
 	c->ascii = False;
 	c->dtp = -1;
 	c->sock = -1;
+	c->host = NULL;
 	return (log_init(NULL, STDERR_FILENO));
 }
 
@@ -103,8 +80,8 @@ int			main(int ac, char **av)
 	if (init_client(&c) == -1)
 		return (over("Error init client", EXIT_FAILURE));
 	port = ft_atoi(av[2]);
-	c.sock = create_client(av[1], port);
-	if (c.sock == -1)
+	c.sock = create_client(&c, av[1], port);
+	if (c.sock == -1 || !c.host)
 	{
 		log_error("Impossible to connect");
 		exit(EXIT_FAILURE);

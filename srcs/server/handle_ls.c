@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 17:27:02 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/12 17:23:36 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/15 15:04:28 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,10 @@ static int		ftp_run_ls(t_ftp_server *serv, char *cmd)
 	pid_t	pid;
 
 	if (cmd && *cmd != '-')
+	{
+		log_warn("Warning no option found");
 		cmd = NULL;
+	}
 	if (pipe(pipes) == -1)
 		return (over_log(-1, LOG_LVL_ERROR, "pipes fail"));
 	if ((pid = fork()) == -1)

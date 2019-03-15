@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 17:55:10 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/04 17:19:24 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/15 14:26:17 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <fcntl.h>
 
 # define FTP_MAX_NPROC 1
-# define FTP_LOG_SEND_FMT "[sock: %d] {yellow}(%s){no} %s"
+# define FTP_LOG_SEND_FMT "[ID: %d] {yellow}(%s){no} %s"
 # define FTP_LOG_RECV_FMT "{yellow}(%s){no} %s"
 
 typedef struct	s_ftp_connect {
