@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   user_right.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guiforge <guiforge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 17:00:35 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/10 14:03:33 by guiforge         ###   ########.fr       */
+/*   Updated: 2019/03/15 15:55:52 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,16 @@ void				ftp_serv_get_home(t_ftp_server *serv,\
 {
 	ft_bzero(home, PATH_MAX + 1);
 	ft_strcpy(home, serv->base);
-	// ft_strcat(home, "/users/");
 	ft_strncat(home, serv->user_log.home, PATH_MAX);
 }
 
-void				ftp_serv_get_pwd_secure(t_ftp_server *serv, char pwd[PATH_MAX + 1])
+void				ftp_serv_get_pwd_secure(t_ftp_server *serv, \
+												char pwd[PATH_MAX + 1])
 {
 	char	*secure;
 
 	ft_bzero(pwd, PATH_MAX + 1);
-	if(serv->user_log.admin)
+	if (serv->user_log.admin)
 		ft_strncpy(pwd, serv->pwd, PATH_MAX);
 	else
 	{

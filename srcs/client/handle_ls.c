@@ -6,13 +6,13 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/01 15:31:59 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/12 17:23:03 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/15 15:41:58 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/client.h"
 
-static void static_handle_ls_ascii(t_ftp_client *c)
+static void	static_handle_ls_ascii(t_ftp_client *c)
 {
 	char	*line;
 	int		ret;
@@ -36,9 +36,8 @@ static void	static_handle_ls_bin(t_ftp_client *c)
 		write(STDOUT_FILENO, line, ret);
 }
 
-int		handle_ls(t_ftp_client *c, char *cmd)
+int			handle_ls(t_ftp_client *c, char *cmd)
 {
-
 	if (ftp_c_create_dtp(c) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	ftp_c_send(c, "LIST ", cmd);
@@ -51,7 +50,6 @@ int		handle_ls(t_ftp_client *c, char *cmd)
 		static_handle_ls_ascii(c);
 	else
 		static_handle_ls_bin(c);
-	
 	close_reset(&c->dtp);
 	if (ftp_recv(c->sock) == 226)
 		return (EXIT_SUCCESS);

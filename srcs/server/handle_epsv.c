@@ -6,13 +6,13 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 15:47:16 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/15 12:19:35 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/15 15:50:58 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/server.h"
 
-static void static_build_msg(char *msg, in_port_t port)
+static void	static_build_msg(char *msg, in_port_t port)
 {
 	char	*tmp;
 

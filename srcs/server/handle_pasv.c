@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 15:47:16 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/15 12:07:52 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/15 15:52:24 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,11 @@ int			handle_pasv(t_ftp_server *serv, char *cmd)
 		ftp_serv_send(serv, FTP_M_KO_ODATA);
 		return (EXIT_FAILURE);
 	}
-	addr = ft_overwrite(ft_getip(), '.', ',', -1);
-	if (!addr)
+	if (!(addr = ft_overwrite(ft_getip(), '.', ',', -1)))
 	{
-		log_fatal("SHIT");
 		ftp_serv_send(serv, FTP_M_KO_ODATA);
 		return (EXIT_FAILURE);
 	}
-	log_debug("%s %d", addr, sin.sin6_port);
 	ftp_serv_concate_ip_port(msg, addr, ntohs(sin.sin6_port));
 	ftp_serv_send(serv, msg);
 	return (0);

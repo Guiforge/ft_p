@@ -6,14 +6,10 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 13:56:31 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/15 14:35:49 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/15 15:32:33 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//TODO: check header
-#include <sys/socket.h>
-#include <netdb.h>
-#include <arpa/inet.h>
 #include "../../includes/client.h"
 
 static int			stat_create_client(char *addr, int port, t_ftp_client *c)
@@ -62,12 +58,12 @@ static int			stat_create_client6(char *addr, int port, t_ftp_client *c)
 	return (sock);
 }
 
-int			create_client(t_ftp_client *c, char *addr, int port)
+int					create_client(t_ftp_client *c, char *addr, int port)
 {
 	int		sock;
 
 	sock = -1;
-	if(!c->host && !addr)
+	if (!c->host && !addr)
 	{
 		log_error("Error arg create_client");
 		return (EXIT_FAILURE);
@@ -83,7 +79,7 @@ int			create_client(t_ftp_client *c, char *addr, int port)
 		}
 		return (sock);
 	}
-	if(c->host->h_addrtype == AF_INET6)
+	if (c->host->h_addrtype == AF_INET6)
 		sock = stat_create_client6(addr, port, c);
 	else
 		sock = stat_create_client(addr, port, c);

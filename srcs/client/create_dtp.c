@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/01 13:34:56 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/15 14:37:05 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/15 15:39:00 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,37 +30,27 @@ static char		*stat_get_ip(char *buffer, char **port)
 	return (start);
 }
 
-static int		stat_get_port(char *start, int *port)
-{
-	int			sep;
-
-	if (!start)
-		return (False);
-	sep = ft_indexchr(start, ',');
-	if (!sep || sep > 3 || !start[sep])
-		return (False);
-	start[sep] = 0;
-	*port = ft_atoi(start) << 8 | ft_atoi(&start[sep + 1]);
-	return (True);
-}
-
 static t_bool	stat_get(char *buffer, char **ip, int *port)
 {
 	char		*star_port;
+	int			sep;
 
 	if (!ip || !port || !buffer)
 		return (False);
 	*ip = stat_get_ip(buffer, &star_port);
-	if (!*ip)
+	if (!*ip || !star_port)
 	{
 		log_error("Error parse IP response");
 		return (False);
 	}
-	if (!stat_get_port(star_port, port))
+	sep = ft_indexchr(star_port, ',');
+	if (!sep || sep > 3 || !star_port[sep])
 	{
 		log_error("Error parse PORT response");
 		return (False);
 	}
+	star_port[sep] = 0;
+	*port = ft_atoi(star_port) << 8 | ft_atoi(&star_port[sep + 1]);
 	return (True);
 }
 
@@ -104,11 +94,8 @@ int				ftp_c_create_dtp_epsv(t_ftp_client *c)
 	ret = ft_atoi(ftp_recv_buff(c->sock, buffer, sizeof(buffer) - 1));
 	ftp_msg_log(-1, buffer);
 	if (!ret || ret != 229)
-	{
-		log_error("Extend Passive Extend mode erreur: Wrong return Code");
 		return (EXIT_FAILURE);
-	}
-	if(!(start_port = ft_strstr(buffer, "|||")))
+	if (!(start_port = ft_strstr(buffer, "|||")))
 	{
 		log_error("Passive mode Extend erreur cannot get port or ip");
 		return (EXIT_FAILURE);
@@ -125,9 +112,9 @@ int				ftp_c_create_dtp_epsv(t_ftp_client *c)
 
 int				ftp_c_create_dtp(t_ftp_client *c)
 {
-	if(ftp_c_create_dtp_epsv(c) == EXIT_SUCCESS)
+	if (ftp_c_create_dtp_epsv(c) == EXIT_SUCCESS)
 		return (EXIT_SUCCESS);
-	if(ftp_c_create_dtp_pasv(c) == EXIT_SUCCESS)
+	if (ftp_c_create_dtp_pasv(c) == EXIT_SUCCESS)
 		return (EXIT_SUCCESS);
 	return (EXIT_FAILURE);
 }

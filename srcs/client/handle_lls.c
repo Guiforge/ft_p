@@ -6,16 +6,11 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 16:22:24 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/12 16:33:02 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/15 15:31:16 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/client.h"
-//TODO: check header
-      #include <sys/types.h>
-       #include <sys/time.h>
-       #include <sys/resource.h>
-       #include <sys/wait.h>
 
 static void		ftp_send_cmd(int fdin)
 {

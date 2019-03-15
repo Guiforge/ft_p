@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/01 17:05:13 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/11 18:24:23 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/15 15:41:05 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ static void	static_handle_get_read_write_bin(t_ftp_client *c, int fd)
 	while ((ret = read(c->dtp, line, sizeof(line))) && ret != -1)
 		write(fd, line, ret);
 }
-
-
 
 static void	static_handle_get_read_write(t_ftp_client *c, int fd)
 {

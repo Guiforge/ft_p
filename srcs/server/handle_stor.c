@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 10:31:04 by guiforge          #+#    #+#             */
-/*   Updated: 2019/03/08 15:27:49 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/15 15:53:57 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 static int	static_handle_stor_open(t_ftp_server *serv, char *path)
 {
-	int	fd;
+	int		fd;
+
 	fd = open(path, O_CREAT | O_RDWR | O_TRUNC, 0666);
 	if (fd == -1)
 	{
@@ -40,7 +41,6 @@ static int	static_handle_stor_ascii(t_ftp_server *serv, char *path)
 			exit(over("Error Malloc", EXIT_FAILURE));
 		if (serv->ascii)
 			write(fd, ftp_newline_end(buffer), ft_strlen(buffer));
-		log_debug("RECV: Write: len:%lld", ft_strlen(buffer));
 		ft_strdel(&buffer);
 	}
 	ft_strdel(&buffer);
@@ -57,19 +57,13 @@ static int	static_handle_stor_bin(t_ftp_server *serv, char *path)
 	ret = 0;
 	if ((fd = static_handle_stor_open(serv, path)) == -1)
 		return (-1);
-	log_debug("HELLO %s %d", path, fd);
 	while ((ret = read(serv->dtp.cs, buffer, sizeof(buffer))) && ret != -1)
-	{
-		log_debug("RECV: Write: len:%lld", ret);
 		write(fd, buffer, ret);
-	}
-	log_debug("HELLO %lld", ret);
-
 	close(fd);
 	return (ret == -1 ? -1 : 0);
 }
 
-int		handle_stor(t_ftp_server *serv, char *cmd)
+int			handle_stor(t_ftp_server *serv, char *cmd)
 {
 	int		ret;
 

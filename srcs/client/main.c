@@ -6,14 +6,10 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 17:34:00 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/15 14:34:59 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/15 15:31:33 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//TODO: check header
-#include <sys/socket.h>
-#include <netdb.h>
-#include <arpa/inet.h>
 #include "../../includes/client.h"
 
 char		*get_cmd(size_t *len)

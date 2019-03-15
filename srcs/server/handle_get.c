@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_get.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guiforge <guiforge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 14:11:37 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/10 14:24:59 by guiforge         ###   ########.fr       */
+/*   Updated: 2019/03/15 15:51:13 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	send_file(t_ftp_server *serv, char *path)
 	}
 }
 
-int		handle_get(t_ftp_server *serv, char *cmd)
+int			handle_get(t_ftp_server *serv, char *cmd)
 {
 	if (!ftp_serv_check(serv, cmd))
 	{
