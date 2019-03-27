@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 13:56:31 by gpouyat           #+#    #+#             */
-/*   Updated: 2019/03/15 15:32:33 by gpouyat          ###   ########.fr       */
+/*   Updated: 2019/03/27 21:02:16 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int			stat_create_client(char *addr, int port, t_ftp_client *c)
 	sin.sin_port = htons(port);
 	if (!c->host && !(c->host = gethostbyname2(addr, AF_INET)))
 		return (over("gethostbyname error\n", -1));
-	ft_memcpy(&(sin.sin_addr.s_addr), c->host->h_addr, c->host->h_length);
+	ft_memcpy(&(sin.sin_addr.s_addr), c->host->h_addr, % sizeof(sin.sin_addr.s_addr));
 	if ((connect(sock, (const struct sockaddr *)&sin, sizeof(sin))) == -1)
 	{
 		log_error("ERROR SOCK\n");
