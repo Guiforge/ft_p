@@ -25,7 +25,7 @@ static int			stat_create_client(char *addr, int port, t_ftp_client *c)
 	sin.sin_port = htons(port);
 	if (!c->host && !(c->host = gethostbyname2(addr, AF_INET)))
 		return (over("gethostbyname error\n", -1));
-	ft_memcpy(&(sin.sin_addr.s_addr), c->host->h_addr, % sizeof(sin.sin_addr.s_addr));
+	ft_memcpy(&(sin.sin_addr.s_addr), c->host->h_addr, c->host->h_length % sizeof(sin.sin_addr.s_addr));
 	if ((connect(sock, (const struct sockaddr *)&sin, sizeof(sin))) == -1)
 	{
 		log_error("ERROR SOCK\n");
